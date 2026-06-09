@@ -716,10 +716,20 @@
   </section>
 
   <!-- PAL — MEET YOUR PAL SECTION -->
-  <section class="pal-section" id="pal" style="position:relative;overflow:hidden;background:#0f0a2e;padding:80px 24px;text-align:center;">
+  <section class="pal-section" id="pal" style="position:relative;overflow:hidden;background:linear-gradient(180deg, rgba(10,8,40,0.85) 0%, rgba(15,10,46,0.75) 100%);padding:80px 24px;text-align:center;backdrop-filter:blur(2px);">
 
-    <!-- World map translucent background -->
-    <div style="position:absolute;inset:0;opacity:0.08;background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution.svg/2560px-World_map_-_low_resolution.svg.png');background-size:cover;background-position:center;filter:invert(1);pointer-events:none;z-index:0;"></div>
+    <!-- Earth globe background -->
+    <div style="position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;">
+      <!-- Earth image - centered large globe, translucent -->
+      <div style="position:absolute;bottom:-20%;left:50%;transform:translateX(-50%);width:800px;height:800px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #1a6b3c 0%, #0d4a8a 35%, #0a2d5e 65%, #050f2a 100%);opacity:0.25;filter:blur(1px);"></div>
+      <!-- Grid lines for globe effect -->
+      <div style="position:absolute;bottom:-20%;left:50%;transform:translateX(-50%);width:800px;height:800px;border-radius:50%;border:1px solid rgba(124,58,237,0.15);opacity:0.4;"></div>
+      <div style="position:absolute;bottom:-20%;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;border:1px solid rgba(124,58,237,0.1);opacity:0.3;margin-left:-100px;margin-bottom:-100px;"></div>
+      <!-- Nebula/purple glow -->
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%, rgba(124,58,237,0.18) 0%, transparent 55%), radial-gradient(ellipse at 70% 60%, rgba(59,130,246,0.08) 0%, transparent 50%);"></div>
+      <!-- Stars -->
+      <div style="position:absolute;inset:0;background-image:radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.7) 0%, transparent 100%), radial-gradient(1px 1px at 25% 35%, rgba(255,255,255,0.5) 0%, transparent 100%), radial-gradient(1px 1px at 40% 10%, rgba(255,255,255,0.6) 0%, transparent 100%), radial-gradient(1px 1px at 55% 50%, rgba(255,255,255,0.4) 0%, transparent 100%), radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.7) 0%, transparent 100%), radial-gradient(1px 1px at 85% 40%, rgba(255,255,255,0.5) 0%, transparent 100%), radial-gradient(1px 1px at 15% 65%, rgba(255,255,255,0.6) 0%, transparent 100%), radial-gradient(1px 1px at 90% 75%, rgba(255,255,255,0.4) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 80% 10%, rgba(196,181,253,0.8) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 5% 90%, rgba(196,181,253,0.6) 0%, transparent 100%);"></div>
+    </div>
     <!-- Universe background: stars + nebula -->
     <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%, rgba(124,58,237,0.22) 0%, transparent 55%), radial-gradient(ellipse at 70% 60%, rgba(59,130,246,0.12) 0%, transparent 50%), radial-gradient(ellipse at 50% 20%, rgba(167,139,250,0.1) 0%, transparent 40%);pointer-events:none;z-index:0;"></div>
     <!-- Star field -->
