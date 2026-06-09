@@ -67,6 +67,9 @@ app.all('/api/*', async (req, res) => {
   }
 });
 
+// ── Static assets (css, images, fonts) ────────────────────────
+app.use(express.static(path.join(__dirname, 'public')));
+
 // ── Static pages ───────────────────────────────────────────────
 const pub = path.join(__dirname, 'public');
 
