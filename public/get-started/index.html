@@ -414,6 +414,13 @@ async function provisionBoard() {
     const data = await res.json();
     if(res.ok) {
       clearOnboardingProgress();
+      // Set session cookie for .getbotpacks.com — user lands in chat not login
+      if(data.sessionToken) {
+        try {
+          const exp = new Date(Date.now() + 30*24*60*60*1000).toUTCString();
+          document.cookie = `pal_session=${data.sessionToken}; domain=.getbotpacks.com; path=/; secure; samesite=none; expires=${exp}`;
+        } catch {}
+      }
       const u = document.getElementById('ob-board-url');
       if(u) u.textContent = data.board?.url || `${slug}.getbotpacks.com`;
       setObStep(3);
@@ -430,18 +437,8 @@ async function provisionBoard() {
   }
 }
 
-document.getElementById('ob-start-chat')?.addEventListener('click', async () => {
+document.getElementById('ob-start-chat')?.addEventListener('click', () => {
   const slug = document.getElementById('ob-slug').value.trim();
-  const pw   = document.getElementById('ob-password').value;
-  const btn  = document.getElementById('ob-start-chat');
-  if(btn) { btn.disabled=true; btn.textContent='Signing you in...'; }
-  try {
-    await fetch(`https://${slug}.getbotpacks.com/api/auth/login`, {
-      method:'POST', credentials:'include',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ password: pw, slug }),
-    });
-  } catch {}
   if(slug) window.location.href = `https://${slug}.getbotpacks.com`;
 });
 
