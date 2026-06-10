@@ -135,7 +135,7 @@
         <p>Smart AI — but with hands.</p>
       </div>
       <div id="ob-board-url"></div>
-      <button class="btn-primary" id="ob-start-chat">Start chatting →</button>
+      <button class="btn-primary" id="ob-start-chat">Go to Settings →</button>
     </div>
 
   </div>
@@ -290,8 +290,8 @@ document.getElementById('ob-start-chat').addEventListener('click', function() {
   if (!slug) return;
   // Pass sessionToken in URL so Pal app can activate cookie without login screen
   const dest = currentSessionToken
-    ? 'https://' + slug + '.getbotpacks.com/?session=' + encodeURIComponent(currentSessionToken)
-    : 'https://' + slug + '.getbotpacks.com';
+    ? 'https://' + slug + '.getbotpacks.com/?session=' + encodeURIComponent(currentSessionToken) + '&start=settings'
+    : 'https://' + slug + '.getbotpacks.com/?start=settings';
   window.location.href = dest;
 });
 
