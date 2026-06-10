@@ -1,501 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="midnight">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Get Started — Pal">
-  <meta name="theme-color" content="#0f172a">
-  <title>Get Started — GetBotPacks</title>
-  <meta name="description" content="Set up your personal AI in 30 seconds. Pal remembers you, gets smarter every day, and lives at your own private link.">
+  <title>Get Started — Pal by GetBotPacks</title>
+  <meta name="description" content="Set up your personal AI in 30 seconds.">
+  <link rel="icon" href="/assets/pal-brain.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #0f172a;
-      --surface: #1e293b;
-      --surface2: #263347;
-      --border: rgba(255,255,255,0.1);
-      --border-focus: #6366f1;
-      --accent: #6366f1;
-      --accent-hover: #4f46e5;
-      --text: #f1f5f9;
-      --text-muted: #94a3b8;
-      --text-dim: #64748b;
-      --danger: #ef4444;
-      --success: #10b981;
-      --radius: 14px;
-      --radius-sm: 10px;
-    }
-
-    html, body {
-      min-height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── NAV BAR ── */
-    .top-nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      background: rgba(15,23,42,0.9);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      height: 52px;
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
-    }
-
-    .top-nav a {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      letter-spacing: -0.01em;
-    }
-
-    .top-nav a:hover { color: var(--text); }
-
-    .nav-brand {
-      font-size: 0.85rem;
-      font-weight: 800;
-      color: var(--text) !important;
-    }
-
-    .nav-dot {
-      width: 7px; height: 7px;
-      background: var(--accent);
-      border-radius: 50%;
-      display: inline-block;
-    }
-
-    /* ── MAIN WRAPPER ── */
-    .page-wrap {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 72px 20px 48px;
-    }
-
-    /* ── ONBOARDING SHELL ── */
-    #onboarding {
-      width: 100%;
-      max-width: 480px;
-      padding-top: 24px;
-    }
-
-    /* ── STEP DOTS ── */
-    .step-dots {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 32px;
-    }
-
-    .step-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      transition: all 0.2s;
-      cursor: default;
-    }
-
-    .step-dot.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      transform: scale(1.2);
-    }
-
-    .step-dot.done {
-      background: rgba(99,102,241,0.4);
-      border-color: rgba(99,102,241,0.4);
-    }
-
-    /* ── STEP PANEL ── */
-    .onboarding-step {
-      display: none;
-      flex-direction: column;
-      gap: 20px;
-      animation: fadeSlide 0.25s ease-out;
-    }
-
-    .onboarding-step.active {
-      display: flex;
-    }
-
-    @keyframes fadeSlide {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── STEP HEADER ── */
-    .step-header {
-      text-align: center;
-    }
-
-    .step-number {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 10px;
-    }
-
-    .step-header h2 {
-      font-size: clamp(1.6rem, 5vw, 2rem);
-      font-weight: 800;
-      color: #ffffff;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      margin-bottom: 10px;
-    }
-
-    .step-header p {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    /* ── FIELD GROUP ── */
-    .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-    }
-
-    .field-label {
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--text-muted);
-    }
-
-    .field-input {
-      width: 100%;
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 13px 16px;
-      font-size: 0.95rem;
-      color: var(--text);
-      font-family: inherit;
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      -webkit-appearance: none;
-    }
-
-    .field-input:focus {
-      border-color: var(--border-focus);
-      box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
-    }
-
-    .field-input::placeholder { color: var(--text-dim); }
-
-    textarea.field-input {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    /* ── SLUG FEEDBACK ── */
-    .slug-preview-line {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .slug-preview-line strong {
-      color: var(--accent);
-    }
-
-    .slug-feedback {
-      font-size: 0.82rem;
-      min-height: 18px;
-      margin-top: 3px;
-    }
-
-    .slug-feedback.ok     { color: var(--success); }
-    .slug-feedback.error  { color: var(--danger); }
-    .slug-feedback.checking { color: var(--text-muted); }
-
-    /* ── THEME GRID ── */
-    .theme-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
-
-    .theme-option {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      padding: 10px 6px;
-      border-radius: var(--radius-sm);
-      border: 2px solid transparent;
-      transition: border-color 0.15s;
-    }
-
-    .theme-option.selected {
-      border-color: var(--accent);
-      background: rgba(99,102,241,0.1);
-    }
-
-    .theme-swatch {
-      width: 48px; height: 48px;
-      border-radius: 10px;
-    }
-
-    .theme-name {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text-muted);
-    }
-
-    .theme-option.selected .theme-name { color: var(--text); }
-
-    /* ── BUTTONS ── */
-    .btn-primary {
-      width: 100%;
-      padding: 15px 20px;
-      background: var(--accent);
-      color: #ffffff;
-      font-size: 1rem;
-      font-weight: 700;
-      border: none;
-      border-radius: var(--radius);
-      cursor: pointer;
-      font-family: inherit;
-      letter-spacing: -0.01em;
-      transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
-      box-shadow: 0 4px 20px rgba(99,102,241,0.35);
-    }
-
-    .btn-primary:hover {
-      background: var(--accent-hover);
-      transform: translateY(-1px);
-      box-shadow: 0 6px 28px rgba(99,102,241,0.5);
-    }
-
-    .btn-primary:active { transform: scale(0.98); }
-    .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
-
-    .btn-secondary {
-      width: 100%;
-      padding: 13px 20px;
-      background: transparent;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      font-weight: 600;
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius);
-      cursor: pointer;
-      font-family: inherit;
-      transition: background 0.15s, color 0.15s, border-color 0.15s;
-    }
-
-    .btn-secondary:hover {
-      background: var(--surface);
-      color: var(--text);
-      border-color: rgba(255,255,255,0.2);
-    }
-
-    /* ── ERROR MESSAGE ── */
-    .error-msg {
-      font-size: 0.82rem;
-      color: var(--danger);
-      min-height: 18px;
-      text-align: center;
-    }
-
-    /* ── STEP 5 FINAL ── */
-    .final-url-box {
-      background: var(--surface);
-      border: 1.5px solid rgba(99,102,241,0.4);
-      border-radius: var(--radius-sm);
-      padding: 16px 20px;
-      font-family: monospace;
-      font-size: 0.9rem;
-      color: var(--accent);
-      text-align: center;
-      word-break: break-all;
-    }
-
-    .final-note {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      text-align: center;
-      line-height: 1.6;
-    }
-
-    /* ── HELPER TEXT ── */
-    .helper-text {
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      line-height: 1.5;
-    }
-
-    /* ── SIGN IN LINK ── */
-    .signin-link {
-      text-align: center;
-      font-size: 0.82rem;
-      color: var(--text-dim);
-      padding-top: 8px;
-    }
-
-    .signin-link a {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .signin-link a:hover { text-decoration: underline; }
-
-    /* ── SLUG SUGGESTIONS ── */
-    #slug-suggestions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 8px;
-      align-items: center;
-    }
-
-    .slug-alt-pill {
-      display: inline-block;
-      padding: 3px 10px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 99px;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      cursor: pointer;
-      font-family: inherit;
-      transition: background 0.15s, color 0.15s;
-    }
-
-    .slug-alt-pill:hover {
-      background: rgba(99,102,241,0.2);
-      color: #a5b4fc;
-      border-color: rgba(99,102,241,0.4);
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 480px) {
-      .page-wrap { padding: 64px 16px 40px; }
-      .theme-grid { grid-template-columns: repeat(2, 1fr); }
-    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#0f172a;--card:#1e293b;--border:rgba(255,255,255,0.1);--accent:#7c3aed;--accent-hover:#6d28d9;--accent-light:rgba(124,58,237,0.15);--text:#f1f5f9;--text-muted:#94a3b8;--text-subtle:#64748b;--danger:#ef4444;--success:#10b981;--input-bg:#1e293b;--radius:14px;--radius-sm:10px;--nav-bg:#0f172a;--nav-border:rgba(255,255,255,0.08)}
+    html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+    .top-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,23,42,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 20px}
+    .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:1rem;font-weight:800;color:var(--text)}
+    .nav-logo img{width:28px;height:28px;border-radius:50%}
+    .nav-signin{font-size:0.85rem;color:var(--accent);text-decoration:none;font-weight:600}
+    .page-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:72px 20px 40px}
+    #onboarding{width:100%;max-width:420px}
+    .step-dots{display:flex;justify-content:center;gap:8px;margin-bottom:28px}
+    .step-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .2s}
+    .step-dot.active{background:var(--accent);width:24px;border-radius:4px}
+    .step-dot.done{background:var(--accent);opacity:0.5}
+    .onboarding-step{display:none;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px 28px;flex-direction:column}
+    .onboarding-step.active{display:flex}
+    .step-header{text-align:center;margin-bottom:28px}
+    .step-header h2{font-size:1.6rem;font-weight:800;color:var(--text);margin-bottom:8px}
+    .step-header p{font-size:0.9rem;color:var(--text-muted)}
+    .field-group{margin-bottom:16px}
+    .field-label{display:block;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:6px}
+    .field-input{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;font-size:0.95rem;color:var(--text);font-family:inherit;transition:border-color .15s}
+    .field-input:focus{outline:none;border-color:var(--accent)}
+    textarea.field-input{resize:vertical;min-height:80px}
+    .btn-primary{width:100%;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);padding:14px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s;margin-top:8px}
+    .btn-primary:hover{background:var(--accent-hover)}
+    .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
+    .btn-secondary{width:100%;background:transparent;color:var(--text-muted);border:1.5px solid var(--border);border-radius:var(--radius);padding:12px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px}
+    .slug-preview-row{font-size:0.85rem;color:var(--text-muted);text-align:center;margin:8px 0 4px}
+    #slug-preview{color:var(--accent);font-weight:700}
+    .slug-status{font-size:0.82rem;min-height:18px;text-align:center;margin-top:4px}
+    .slug-ok{color:var(--success)} .slug-err{color:var(--danger)}
+    .pills-grid,.ob-interest-pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:16px}
+    .ob-pill{background:var(--bg);border:1.5px solid var(--border);border-radius:20px;padding:6px 14px;font-size:0.82rem;font-weight:600;color:var(--text-muted);cursor:pointer;font-family:inherit;transition:all .15s}
+    .ob-pill.selected{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+    .theme-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+    .theme-option{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
+    .theme-swatch{width:40px;height:40px;border-radius:10px;border:2px solid transparent;transition:all .15s}
+    .theme-option.selected .theme-swatch{border-color:var(--accent)}
+    .theme-name{font-size:0.7rem;color:var(--text-muted);font-weight:600}
+    #pw-error{font-size:0.85rem;color:var(--danger);min-height:16px;text-align:center;margin:4px 0}
+    #ob-board-url{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;font-family:monospace;font-size:0.9rem;color:var(--accent);text-align:center;margin-bottom:8px}
   </style>
 </head>
 <body>
-
-<!-- Top nav bar -->
 <nav class="top-nav">
-  <a class="nav-brand" href="/">
-    <span class="nav-dot"></span>
-    GetBotPacks
-  </a>
+  <a href="/" class="nav-logo"><img src="/assets/pal-brain.png" alt="Pal"> Pal</a>
+  <a href="/signin" class="nav-signin">Sign in →</a>
 </nav>
-
-<!-- Main page wrap -->
 <div class="page-wrap">
   <div id="onboarding">
+  <!-- Step dots: 4 steps -->
+  <div class="step-dots" id="step-dots">
+    <div class="step-dot active" data-step="0"></div>
+    <div class="step-dot" data-step="1"></div>
+    <div class="step-dot" data-step="2"></div>
+    <div class="step-dot" data-step="3"></div>
+  </div>
 
-    <!-- Step dots -->
-    <div class="step-dots" id="step-dots">
-      <div class="step-dot active"  data-step="0"></div>
-      <div class="step-dot"         data-step="1"></div>
-      <div class="step-dot"         data-step="2"></div>
-      <div class="step-dot"         data-step="3"></div>
-      <div class="step-dot"         data-step="4"></div>
+  <!-- Step 1: Claim your link -->
+  <div class="onboarding-step active" id="ob-step-0">
+    <div class="step-header">
+      <div style="font-size:2.4rem;margin-bottom:12px;">👋</div>
+      <h2>Meet your Pal</h2>
+      <p>Choose your personal link - ready in 30 seconds.</p>
     </div>
-
-    <!-- ── STEP 1: Name Your Pal ── -->
-    <div class="onboarding-step active" id="ob-step-0">
-      <div class="step-header">
-        <div class="step-number">Step 1 of 5</div>
-        <h2>Name your Pal</h2>
-        <p>Give your AI a name — and tell it who you are.</p>
-      </div>
-
-      <div class="field-group">
-        <label class="field-label" for="ob-bot-name">What should your Pal be called?</label>
-        <input class="field-input" id="ob-bot-name" type="text"
-          placeholder="e.g. Max, Aria, Scout" maxlength="50" autocomplete="off">
-      </div>
-
-      <div class="field-group">
-        <label class="field-label" for="ob-user-name">What should your Pal call you?</label>
-        <input class="field-input" id="ob-user-name" type="text"
-          placeholder="Your first name or nickname" maxlength="50" autocomplete="given-name">
-      </div>
-
-      <div class="field-group">
-        <label class="field-label" for="ob-user-notes">Tell your Pal anything it should always know about you</label>
-        <textarea class="field-input" id="ob-user-notes" rows="3" maxlength="1000"
-          placeholder="My job, what I'm working on, how I like to communicate..."></textarea>
-      </div>
-
-      <button class="btn-primary" id="ob-step0-next">Claim your link →</button>
-
-      <div class="signin-link">Already have a Pal? <a href="/signin">Sign in →</a></div>
+    <div class="field-group">
+      <label class="field-label" for="ob-slug">Your address</label>
+      <input class="field-input" id="ob-slug" type="text" placeholder="yourname" maxlength="32" autocomplete="off" autocapitalize="none" spellcheck="false">
+      <div class="slug-feedback" id="slug-feedback"></div>
+      <p class="helper-text" style="margin:8px 0 4px;font-size:0.85rem;color:var(--text-muted);"><strong><span id="slug-preview">yourname</span>.getbotpacks.com</strong></p>
+      <div id="slug-suggestions" style="display:none;margin-top:10px;"></div>
     </div>
+    <div style="font-size:0.88rem;color:var(--text-muted);line-height:1.5;margin-bottom:4px;">Lowercase letters, numbers, hyphens. 3-32 characters.</div>
+    <button class="btn-primary" id="ob-step0-next" disabled>Set password →</button>
+  </div>
 
-    <!-- ── STEP 2: Choose Slug ── -->
-    <div class="onboarding-step" id="ob-step-1">
-      <div class="step-header">
-        <div class="step-number">Step 2 of 5</div>
-        <h2>Claim your link</h2>
-        <p>Pick a short, unique address for your Pal.</p>
-      </div>
-
-      <div class="field-group">
-        <label class="field-label" for="ob-slug">Choose your address</label>
-        <input class="field-input" id="ob-slug" type="text"
-          placeholder="yourname" maxlength="32"
-          autocomplete="off" autocapitalize="none" spellcheck="false">
-        <div class="slug-feedback" id="slug-feedback"></div>
-        <p class="slug-preview-line">
-          Your Pal lives here: <strong><span id="slug-preview">[yourname]</span>.getbotpacks.com</strong>
-        </p>
-        <div id="slug-suggestions" style="display:none;"></div>
-      </div>
-
-      <p class="helper-text">Lowercase letters, numbers, hyphens only. 3–32 characters.</p>
-
-      <button class="btn-primary" id="ob-step1-next" disabled>Choose theme →</button>
-      <button class="btn-secondary" id="ob-step1-back">← Back</button>
+  <!-- Step 2: Password + Theme -->
+  <div class="onboarding-step" id="ob-step-1">
+    <div class="step-header">
+      <div style="font-size:2.4rem;margin-bottom:12px;">🔒</div>
+      <h2>Protect your Pal</h2>
+      <p>Set a password and pick a look.</p>
     </div>
-
-    <!-- ── STEP 3: Choose Theme ── -->
-    <div class="onboarding-step" id="ob-step-2">
-      <div class="step-header">
-        <div class="step-number">Step 3 of 5</div>
-        <h2>Choose your theme</h2>
-        <p>Pick a look. You can change this anytime.</p>
-      </div>
-
+    <div class="field-group">
+      <label class="field-label" for="ob-password">Password</label>
+      <input class="field-input" id="ob-password" type="password" placeholder="At least 8 characters" minlength="8" autocomplete="new-password">
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="ob-password-confirm">Confirm password</label>
+      <input class="field-input" id="ob-password-confirm" type="password" placeholder="Same password again" autocomplete="new-password">
+    </div>
+    <div id="pw-error" style="font-size:0.9rem;color:var(--danger);min-height:16px;"></div>
+    <div class="field-group" style="margin-top:4px;">
+      <label class="field-label">Theme</label>
       <div class="theme-grid">
         <div class="theme-option selected" data-theme-value="light">
-          <div class="theme-swatch" style="background:#ffffff;border:2px solid rgba(255,255,255,0.15);"></div>
+          <div class="theme-swatch" style="background:#ffffff;border:2px solid #e2e8f0;"></div>
           <div class="theme-name">Light</div>
         </div>
         <div class="theme-option" data-theme-value="midnight">
-          <div class="theme-swatch" style="background:#0f172a;border:2px solid rgba(255,255,255,0.12);"></div>
+          <div class="theme-swatch" style="background:#0f172a;"></div>
           <div class="theme-name">Midnight</div>
         </div>
         <div class="theme-option" data-theme-value="ocean">
@@ -507,348 +120,329 @@
           <div class="theme-name">Ember</div>
         </div>
       </div>
+    </div>
+    <!-- preserved hidden inputs for API compat -->
+    <input type="hidden" id="ob-bot-name" value="Pal">
+    <input type="hidden" id="ob-user-name" value="">
+    <input type="hidden" id="ob-user-notes" value="">
+    <input type="hidden" id="ob-voice" value="21m00Tcm4TlvDq8ikWAM">
+    <button class="btn-primary" id="ob-step1-next">Create my Pal →</button>
+    <button class="btn-secondary" id="ob-step1-back">← Back</button>
+  </div>
 
-      <button class="btn-primary" id="ob-step2-next">Set your password →</button>
-      <button class="btn-secondary" id="ob-step2-back">← Back</button>
+  <!-- Step 3: About you -->
+  <div class="onboarding-step" id="ob-step-2">
+    <div class="step-header">
+      <div style="font-size:2.4rem;margin-bottom:8px;">🧠</div>
+      <h2>What brings you here?</h2>
+      <p style="font-size:0.85rem;">Pick all that apply - Pal personalizes itself to you.</p>
     </div>
 
-    <!-- ── STEP 4: Set Password ── -->
-    <div class="onboarding-step" id="ob-step-3">
-      <div class="step-header">
-        <div class="step-number">Step 4 of 5</div>
-        <h2>Protect your Pal</h2>
-        <p>Set a password to keep your board private.</p>
-      </div>
-
-      <div class="field-group">
-        <label class="field-label" for="ob-password">Password</label>
-        <input class="field-input" id="ob-password" type="password"
-          placeholder="At least 8 characters" minlength="8" autocomplete="new-password">
-      </div>
-
-      <div class="field-group">
-        <label class="field-label" for="ob-password-confirm">Confirm password</label>
-        <input class="field-input" id="ob-password-confirm" type="password"
-          placeholder="Same password again" autocomplete="new-password">
-      </div>
-
-      <div class="error-msg" id="pw-error"></div>
-
-      <button class="btn-primary" id="ob-step3-next">Create my Pal →</button>
-      <button class="btn-secondary" id="ob-step3-back">← Back</button>
+    <!-- Name -->
+    <div class="field-group" style="margin-bottom:14px;">
+      <input class="field-input" id="ob-your-name" type="text" placeholder="Your name (optional)" maxlength="50" autocomplete="given-name" style="text-align:center;">
     </div>
 
-    <!-- ── STEP 5: Ready ── -->
-    <div class="onboarding-step" id="ob-step-4">
-      <div class="step-header" style="padding-top:16px;">
-        <div style="font-size:3rem;margin-bottom:16px;">🎉</div>
-        <h2>Your Pal is ready!</h2>
-        <p id="ob-ready-text">Your personal AI is all set up and ready to go.</p>
-      </div>
-
-      <div class="final-url-box" id="ob-board-url"></div>
-
-      <p class="final-note">
-        Bookmark this address or install as an app — your Pal is here whenever you need it.
-      </p>
-
-      <button class="btn-primary" id="ob-start-chat">
-        Start chatting with <span id="ob-bot-name-final">Pal</span> →
-      </button>
+    <!-- Interest pills -->
+    <div id="ob-interest-pills" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:16px;">
+      <button type="button" class="ob-pill" data-val="Work &amp; Business">💼 Work &amp; Business</button>
+      <button type="button" class="ob-pill" data-val="Learn &amp; Research">🎓 Learn &amp; Research</button>
+      <button type="button" class="ob-pill" data-val="Tech &amp; Coding">💻 Tech &amp; Coding</button>
+      <button type="button" class="ob-pill" data-val="Writing &amp; Content">✍️ Writing &amp; Content</button>
+      <button type="button" class="ob-pill" data-val="Money &amp; Finance">💰 Money &amp; Finance</button>
+      <button type="button" class="ob-pill" data-val="Health &amp; Wellness">❤️ Health &amp; Wellness</button>
+      <button type="button" class="ob-pill" data-val="Everyday Life">🏠 Everyday Life</button>
+      <button type="button" class="ob-pill" data-val="Travel &amp; Culture">✈️ Travel &amp; Culture</button>
+      <button type="button" class="ob-pill" data-val="Creativity &amp; Design">🎨 Creativity &amp; Design</button>
+      <button type="button" class="ob-pill" data-val="Explore Anything">🔍 Explore Anything</button>
     </div>
 
-  </div><!-- /onboarding -->
-</div><!-- /page-wrap -->
+    <button class="btn-primary" id="ob-step2-next">Almost done →</button>
+    <button class="btn-secondary" id="ob-step2-back">← Back</button>
+  </div>
 
+  <!-- Step 4: Ready -->
+  <div class="onboarding-step" id="ob-step-3">
+    <div class="step-header" style="padding-top:24px;">
+      <div style="font-size:3rem;margin-bottom:16px;">🎉</div>
+      <h2>Your Pal is ready!</h2>
+      <p id="ob-ready-text">Personalize it anytime in Settings.</p>
+    </div>
+    <div id="ob-board-url" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;font-family:monospace;font-size:0.9rem;color:var(--accent);text-align:center;margin-bottom:8px;"></div>
+    <div style="font-size:0.82rem;color:var(--text-muted);text-align:center;line-height:1.6;margin-bottom:4px;">
+      Bookmark this or install as an app - your Pal lives here.
+    </div>
+    <button class="btn-primary" id="ob-start-chat">Start chatting →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     LOGIN - password gate for existing boards
+═══════════════════════════════════════════════════ -->
+</div>
 <script>
-// ═══════════════════════════════════════════════════════════════
-// GetBotPacks — Pal Onboarding
-// All 5 steps happen here. Final submit POSTs to:
-//   https://[slug].getbotpacks.com/api/boards/provision
-// Then redirects to that subdomain.
-// Progress is saved to localStorage across the 5 steps.
-// ═══════════════════════════════════════════════════════════════
+const PAL_SLUG = '';
+let obCurrentStep = 0, slugAvailable = false, obSelectedTheme = 'midnight', slugCheckTimer = null;
 
-let obCurrentStep = 0;
-let slugAvailable = false;
-let obSelectedTheme = 'light';
-let slugCheckTimer = null;
-
-// ── STEP MANAGEMENT ─────────────────────────────────────────────
-
-function setObStep(step) {
-  document.querySelectorAll('.onboarding-step').forEach((el, i) => {
-    el.classList.toggle('active', i === step);
-  });
-  document.querySelectorAll('.step-dot').forEach((dot, i) => {
-    dot.classList.toggle('active', i === step);
-    dot.classList.toggle('done', i < step);
-  });
-  obCurrentStep = step;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+function setObStep(n) {
+  document.querySelectorAll('.onboarding-step').forEach((e,i) => e.classList.toggle('active', i===n));
+  document.querySelectorAll('.step-dot').forEach((d,i) => { d.classList.toggle('active',i===n); d.classList.toggle('done',i<n); });
+  obCurrentStep = n;
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-
-// ── PROGRESS PERSISTENCE ─────────────────────────────────────────
-
-function saveProgress(step, data) {
-  try {
-    localStorage.setItem('gbp_pal_onboarding', JSON.stringify({ step, data, ts: Date.now() }));
-  } catch { /* ignore */ }
-}
-
-function loadProgress() {
-  try {
-    const raw = localStorage.getItem('gbp_pal_onboarding');
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    // Expire after 24h
-    if (Date.now() - parsed.ts > 86400000) {
-      localStorage.removeItem('gbp_pal_onboarding');
-      return null;
-    }
-    return parsed;
-  } catch { return null; }
-}
-
-function clearProgress() {
-  try { localStorage.removeItem('gbp_pal_onboarding'); } catch { /* ignore */ }
-}
-
-// ── RESTORE SAVED PROGRESS ───────────────────────────────────────
-
-(function restoreProgress() {
-  const saved = loadProgress();
-  if (!saved || !saved.data) return;
-  const { step, data } = saved;
-
-  if (data.botName) document.getElementById('ob-bot-name').value = data.botName;
-  if (data.userName) document.getElementById('ob-user-name').value = data.userName;
-  if (data.userNotes) document.getElementById('ob-user-notes').value = data.userNotes;
-
-  if (data.slug) {
-    const slugInput = document.getElementById('ob-slug');
-    slugInput.value = data.slug;
-    document.getElementById('slug-preview').textContent = data.slug;
-    slugInput.dispatchEvent(new Event('input'));
-  }
-
-  if (data.theme) {
-    obSelectedTheme = data.theme;
-    document.querySelectorAll('.theme-option').forEach(o => {
-      o.classList.toggle('selected', o.dataset.themeValue === data.theme);
-    });
-  }
-
-  // Jump to saved step (don't skip past step 3 — password can't be pre-filled)
-  const targetStep = Math.min(step, 3);
-  if (targetStep > 0) setObStep(targetStep);
-})();
-
-// ── STEP 0 → 1 ──────────────────────────────────────────────────
+function saveOnboardingProgress(s,d) { try{localStorage.setItem('pal_onboarding',JSON.stringify({step:s,data:d,ts:Date.now()}))}catch{} }
+function clearOnboardingProgress() { try{localStorage.removeItem('pal_onboarding')}catch{} }
+function showApp() { window.location.href = 'https://' + document.getElementById('ob-slug').value.trim() + '.getbotpacks.com'; }
 
 document.getElementById('ob-step0-next').addEventListener('click', () => {
-  const botName = document.getElementById('ob-bot-name').value.trim();
-  const userName = document.getElementById('ob-user-name').value.trim();
-  if (!botName) { alert('Please give your Pal a name.'); return; }
-  if (!userName) { alert('Please enter your name.'); return; }
-  saveProgress(1, {
-    botName, userName,
-    userNotes: document.getElementById('ob-user-notes').value.trim()
-  });
+  if (!slugAvailable) return;
+  const slug = document.getElementById('ob-slug').value.trim();
+  saveOnboardingProgress(1, { slug, theme: obSelectedTheme });
   setObStep(1);
 });
 
-// ── STEP 1: SLUG ────────────────────────────────────────────────
-
+// Slug input
 document.getElementById('ob-slug').addEventListener('input', e => {
-  const raw = e.target.value;
-  const val = raw.toLowerCase().replace(/[^a-z0-9-]/g, '');
-  if (e.target.value !== val) e.target.value = val;
-
-  // Live preview
-  document.getElementById('slug-preview').textContent = val || '[yourname]';
-
-  const btn = document.getElementById('ob-step1-next');
-  const fb  = document.getElementById('slug-feedback');
+  const val = e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '');
+  e.target.value = val;
+  const preview = document.getElementById('slug-preview');
+  if (preview) preview.textContent = val || 'yourname';
+  const btn = document.getElementById('ob-step0-next');
+  const fb = document.getElementById('slug-feedback');
   const suggestionsEl = document.getElementById('slug-suggestions');
-
   btn.disabled = true;
   slugAvailable = false;
-  suggestionsEl.style.display = 'none';
+  if (suggestionsEl) suggestionsEl.style.display = 'none';
   clearTimeout(slugCheckTimer);
-
   if (val.length < 3) {
-    fb.textContent = val.length ? 'Too short — minimum 3 characters.' : '';
+    fb.textContent = val.length ? 'Too short - minimum 3 characters.' : '';
     fb.className = 'slug-feedback error';
     return;
   }
-
-  fb.textContent = 'Checking availability…';
+  fb.textContent = 'Checking...';
   fb.className = 'slug-feedback checking';
-
   slugCheckTimer = setTimeout(async () => {
     try {
-      // Check availability against Pal API (same Railway app that hosts all boards)
-      const res = await fetch(`https://getbotpacks.com/api/slug-check?slug=${encodeURIComponent(val)}`);
+      const res = await fetch(`/api/slug-check?slug=${encodeURIComponent(val)}`);
       const data = await res.json();
       if (data.available) {
         fb.textContent = `✓ ${val}.getbotpacks.com is available!`;
         fb.className = 'slug-feedback ok';
         slugAvailable = true;
         btn.disabled = false;
-        suggestionsEl.style.display = 'none';
+        if (suggestionsEl) suggestionsEl.style.display = 'none';
       } else {
-        fb.textContent = data.reason || 'That address is already taken.';
+        fb.textContent = data.reason || 'That address is taken.';
         fb.className = 'slug-feedback error';
-
-        // Suggest alternatives
-        const firstName = (document.getElementById('ob-user-name').value.trim().split(' ')[0] || '')
-          .toLowerCase().replace(/[^a-z0-9]/g, '');
-        const alts = [val + '1', firstName ? val + '-' + firstName : val + '-me', val + '2026'];
-        suggestionsEl.innerHTML =
-          '<span style="font-size:0.78rem;color:var(--text-dim);margin-right:4px;">Try instead:</span>' +
-          alts.map(a =>
-            `<button class="slug-alt-pill" data-slug="${a}">${a}</button>`
-          ).join('');
-        suggestionsEl.style.display = 'flex';
-
-        suggestionsEl.querySelectorAll('.slug-alt-pill').forEach(pill => {
-          pill.addEventListener('click', () => {
-            document.getElementById('ob-slug').value = pill.dataset.slug;
-            document.getElementById('ob-slug').dispatchEvent(new Event('input'));
+        if (suggestionsEl) {
+          const alts = [val + '1', val + '_me', val + '2026'];
+          suggestionsEl.innerHTML = '<span style="font-size:0.9rem;color:var(--text-muted);margin-right:6px;">Try instead:</span>' +
+            alts.map(a => `<button class="slug-alt-pill" data-slug="${a}" style="display:inline-block;margin:2px 4px 2px 0;padding:3px 10px;background:var(--card,#f1f5f9);border:1px solid var(--border,#e2e8f0);border-radius:99px;font-size:0.88rem;color:var(--text-muted,#64748b);cursor:pointer;">${a}</button>`).join('');
+          suggestionsEl.style.display = 'block';
+          suggestionsEl.querySelectorAll('.slug-alt-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+              const slugInput = document.getElementById('ob-slug');
+              slugInput.value = pill.dataset.slug;
+              slugInput.dispatchEvent(new Event('input'));
+            });
           });
-        });
+        }
       }
     } catch {
-      fb.textContent = 'Could not verify — tap "Choose theme" to continue anyway.';
-      slugAvailable = true;
-      btn.disabled = false;
+      fb.textContent = 'Could not check availability. Please try again.';
       fb.className = 'slug-feedback error';
     }
   }, 500);
 });
 
-document.getElementById('ob-step1-next').addEventListener('click', () => {
-  if (!slugAvailable) return;
-  const slug = document.getElementById('ob-slug').value.trim();
-  const botName  = document.getElementById('ob-bot-name').value.trim();
-  const userName = document.getElementById('ob-user-name').value.trim();
-  saveProgress(2, {
-    botName, userName,
-    userNotes: document.getElementById('ob-user-notes').value.trim(),
-    slug, theme: obSelectedTheme
-  });
-  setObStep(2);
-});
-
-document.getElementById('ob-step1-back').addEventListener('click', () => setObStep(0));
-
-// ── STEP 2: THEME ────────────────────────────────────────────────
-
+// Theme picker
 document.querySelectorAll('.theme-option').forEach(opt => {
   opt.addEventListener('click', () => {
     document.querySelectorAll('.theme-option').forEach(o => o.classList.remove('selected'));
     opt.classList.add('selected');
     obSelectedTheme = opt.dataset.themeValue;
+    document.documentElement.setAttribute('data-theme', obSelectedTheme);
   });
 });
 
-document.getElementById('ob-step2-next').addEventListener('click', () => {
-  const slug = document.getElementById('ob-slug').value.trim();
-  const botName  = document.getElementById('ob-bot-name').value.trim();
-  const userName = document.getElementById('ob-user-name').value.trim();
-  saveProgress(3, {
-    botName, userName,
-    userNotes: document.getElementById('ob-user-notes').value.trim(),
-    slug, theme: obSelectedTheme
-  });
-  setObStep(3);
-});
-
-document.getElementById('ob-step2-back').addEventListener('click', () => setObStep(1));
-
-// ── STEP 3: PASSWORD ─────────────────────────────────────────────
-
-document.getElementById('ob-step3-next').addEventListener('click', async () => {
-  const pw  = document.getElementById('ob-password').value;
+// Step 1 → 2 (password → done)
+document.getElementById('ob-step1-next').addEventListener('click', () => {
+  const pw = document.getElementById('ob-password').value;
   const pw2 = document.getElementById('ob-password-confirm').value;
   const errEl = document.getElementById('pw-error');
   if (pw.length < 8) { errEl.textContent = 'Password must be at least 8 characters.'; return; }
-  if (pw !== pw2)    { errEl.textContent = 'Passwords do not match.'; return; }
+  if (pw !== pw2) { errEl.textContent = 'Passwords do not match.'; return; }
   errEl.textContent = '';
-  await provisionBoard(pw);
+  setObStep(2); // go to "about you" step
+});
+document.getElementById('ob-step1-back').addEventListener('click', () => setObStep(0));
+document.getElementById('ob-step2-next').addEventListener('click', async () => { await provisionBoard(); });
+document.getElementById('ob-step2-back').addEventListener('click', () => setObStep(1));
+
+// Interest pill toggle
+document.getElementById('ob-interest-pills').addEventListener('click', e => {
+  const pill = e.target.closest('.ob-pill');
+  if (pill) pill.classList.toggle('selected');
 });
 
-// Allow Enter on password fields
-['ob-password', 'ob-password-confirm'].forEach(id => {
-  document.getElementById(id).addEventListener('keydown', e => {
-    if (e.key === 'Enter') document.getElementById('ob-step3-next').click();
-  });
-});
-
-document.getElementById('ob-step3-back').addEventListener('click', () => setObStep(2));
-
-// ── PROVISION ────────────────────────────────────────────────────
-
-async function provisionBoard(password) {
-  const btn = document.getElementById('ob-step3-next');
+async function provisionBoard() {
+  const btn = document.getElementById('ob-step2-next');
   btn.disabled = true;
-  btn.textContent = 'Creating your Pal…';
+  btn.textContent = 'Creating your Pal...';
 
   const slug      = document.getElementById('ob-slug').value.trim();
-  const botName   = document.getElementById('ob-bot-name').value.trim();
-  const userName  = document.getElementById('ob-user-name').value.trim();
-  const userNotes = document.getElementById('ob-user-notes').value.trim();
+  const password  = document.getElementById('ob-password').value;
+  const userName  = (document.getElementById('ob-your-name')?.value || '').trim();
+  const selected  = [...document.querySelectorAll('.ob-pill.selected')].map(p => p.dataset.val);
+  const userNotes = selected.length ? `Interested in: ${selected.join(', ')}` : '';
 
   try {
-    // POST provision to the Pal backend (lives at getbotpacks.com on Railway)
-    const res = await fetch('https://getbotpacks.com/api/boards/provision', {
+    const res = await fetch(`/api/boards/provision?_pal=${slug}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        slug,
-        name: botName,
-        theme: obSelectedTheme,
-        password,
-        tier: 'starter',
-        userName,
-        userNotes,
+        slug, name: 'Pal', theme: obSelectedTheme,
+        password, tier: 'starter',
+        userName, userNotes,
+        ref: localStorage.getItem('pal_ref') || undefined,
       }),
     });
-
     const data = await res.json();
-
     if (res.ok) {
-      // Clear onboarding progress — they're done
-      clearProgress();
-
-      const boardUrl = data.board?.url || `https://${slug}.getbotpacks.com`;
-
-      // Update final step UI
-      document.getElementById('ob-bot-name-final').textContent = botName;
-      document.getElementById('ob-board-url').textContent = boardUrl;
-      document.getElementById('ob-ready-text').textContent =
-        `${botName} is set up and waiting for you at your personal address.`;
-
-      setObStep(4);
+      PAL.settings.theme = obSelectedTheme;
+      if (userName) PAL.settings.userName = userName;
+      saveSettingsToStorage();
+      clearOnboardingProgress();
+      document.getElementById('ob-board-url').textContent = data.board?.url || `${slug}.getbotpacks.com`;
+      setObStep(3);
     } else {
-      const msg = data.errors ? data.errors.join(', ') : (data.error || 'Could not create your Pal. Please try again.');
+      const msg = data.errors ? data.errors.join(', ') : data.error || 'Could not create board.';
       document.getElementById('pw-error').textContent = msg;
+      setObStep(1);
     }
   } catch {
-    document.getElementById('pw-error').textContent = 'Network error. Please check your connection and try again.';
+    document.getElementById('pw-error').textContent = 'Network error. Please try again.';
+    setObStep(1);
   } finally {
     btn.disabled = false;
-    btn.textContent = 'Create my Pal →';
+    btn.textContent = 'Almost done →';
   }
 }
-
-// ── STEP 5: REDIRECT ─────────────────────────────────────────────
 
 document.getElementById('ob-start-chat').addEventListener('click', () => {
   const slug = document.getElementById('ob-slug').value.trim();
   window.location.href = `https://${slug}.getbotpacks.com`;
 });
+
+// ── Chat ───────────────────────────────────────────────────────
+const chatInput = document.getElementById('chat-input');
+const sendBtn = document.getElementById('send-btn');
+const chatMessages = document.getElementById('chat-messages');
+
+// Auto-resize textarea
+chatInput.addEventListener('input', () => {
+  chatInput.style.height = 'auto';
+  chatInput.style.height = Math.min(chatInput.scrollHeight, 160) + 'px';
+  updateInputHeight(); // keep chat-messages bottom in sync
+});
+
+chatInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+sendBtn.addEventListener('click', sendMessage);
+
+// Nav pills
+// Photo pill
+document.getElementById('pill-photo').addEventListener('click', () => {
+  document.getElementById('file-photo').click();
+});
+
+// PDF pill
+document.getElementById('pill-pdf').addEventListener('click', () => {
+  document.getElementById('file-pdf').click();
+});
+
+document.getElementById('pill-projects').addEventListener('click', () => {
+  switchTab('projects');
+});
+// Settings pill removed - use bottom nav Settings tab instead
+
+// Slug check
+document.getElementById('ob-slug').addEventListener('input', e => {
+  const val = e.target.value.toLowerCase().replace(/[^a-z0-9-]/g,'').slice(0,32);
+  if(e.target.value !== val) e.target.value = val;
+  const preview = document.getElementById('slug-preview');
+  if(preview) preview.textContent = val || 'yourname';
+  const statusEl = document.getElementById('slug-status');
+  const nextBtn = document.getElementById('ob-step0-next');
+  slugAvailable = false;
+  if(nextBtn) nextBtn.disabled = true;
+  if(!val || val.length < 3) { if(statusEl){statusEl.textContent=val.length?'At least 3 characters':'';statusEl.className='slug-status slug-err'} return; }
+  clearTimeout(slugCheckTimer);
+  slugCheckTimer = setTimeout(async () => {
+    try {
+      const r = await fetch(`/api/slug-check?slug=${encodeURIComponent(val)}`);
+      const d = await r.json();
+      slugAvailable = d.available;
+      if(statusEl){ statusEl.textContent = d.available ? `✓ ${val}.getbotpacks.com is available!` : 'Already taken — try another'; statusEl.className='slug-status '+(d.available?'slug-ok':'slug-err'); }
+      if(nextBtn) nextBtn.disabled = !d.available;
+    } catch {}
+  }, 400);
+});
+
+// Theme
+document.querySelectorAll('.theme-option').forEach(o => o.addEventListener('click', () => {
+  document.querySelectorAll('.theme-option').forEach(x => x.classList.remove('selected'));
+  o.classList.add('selected'); obSelectedTheme = o.dataset.themeValue;
+  document.documentElement.setAttribute('data-theme', obSelectedTheme);
+}));
+
+// Pills
+document.getElementById('ob-interest-pills')?.addEventListener('click', e => {
+  const p = e.target.closest('.ob-pill'); if(p) p.classList.toggle('selected');
+});
+
+async function provisionBoard() {
+  const btn = document.getElementById('ob-step2-next');
+  if(btn) { btn.disabled=true; btn.textContent='Creating your Pal...'; }
+  const slug = document.getElementById('ob-slug').value.trim();
+  const userName = (document.getElementById('ob-your-name')?.value||'').trim();
+  const selected = [...document.querySelectorAll('.ob-pill.selected')].map(p=>p.dataset.val);
+  const ref = localStorage.getItem('pal_ref')||undefined;
+  try {
+    const res = await fetch('/api/boards/provision', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({slug, name:'Pal', theme:obSelectedTheme, password:document.getElementById('ob-password').value, tier:'starter', userName, userNotes:selected.join(', '), ref})
+    });
+    const data = await res.json();
+    if(res.ok) {
+      clearOnboardingProgress();
+      const u = document.getElementById('ob-board-url');
+      if(u) u.textContent = data.board?.url || `${slug}.getbotpacks.com`;
+      setObStep(3);
+    } else {
+      const msg = data.errors?data.errors.join(', '):data.error||'Could not create. Try again.';
+      const errEl = document.getElementById('pw-error'); if(errEl) errEl.textContent=msg;
+      setObStep(1);
+      if(btn) { btn.disabled=false; btn.textContent='Almost done →'; }
+    }
+  } catch {
+    const errEl = document.getElementById('pw-error'); if(errEl) errEl.textContent='Network error. Please try again.';
+    setObStep(1);
+    if(btn) { btn.disabled=false; btn.textContent='Almost done →'; }
+  }
+}
+
+document.getElementById('ob-start-chat')?.addEventListener('click', () => {
+  const slug = document.getElementById('ob-slug').value.trim();
+  if(slug) window.location.href = `https://${slug}.getbotpacks.com`;
+});
+
+(function(){ try{ const r=new URLSearchParams(window.location.search).get('ref'); if(r) localStorage.setItem('pal_ref',r.toLowerCase()); }catch{} })();
 </script>
 </body>
 </html>
