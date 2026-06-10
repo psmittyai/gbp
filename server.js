@@ -76,6 +76,7 @@ const pub = path.join(__dirname, 'public');
 app.get('/',            (req, res) => res.sendFile(path.join(pub, 'index.html')));
 app.get('/affiliate',   (req, res) => res.sendFile(path.join(pub, 'affiliate.html')));
 app.get('/get-started', (req, res) => res.sendFile(path.join(pub, 'get-started', 'index.html')));
+app.get('/signin',      (req, res) => res.sendFile(path.join(pub, 'signin',      'index.html')));
 app.get('/blog',        (req, res) => res.sendFile(path.join(pub, 'blog', 'index.html')));
 app.get('/blog/:slug',  (req, res) => {
   const file = path.join(pub, 'blog', req.params.slug);

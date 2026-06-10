@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="midnight">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -9,325 +9,290 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--bg:#0f172a;--card:#1e293b;--border:rgba(255,255,255,0.1);--accent:#7c3aed;--accent-hover:#6d28d9;--accent-light:rgba(124,58,237,0.15);--text:#f1f5f9;--text-muted:#94a3b8;--text-subtle:#64748b;--danger:#ef4444;--success:#10b981;--input-bg:#1e293b;--radius:14px;--radius-sm:10px;--nav-bg:#0f172a;--nav-border:rgba(255,255,255,0.08)}
+    :root{
+      --bg:#0f172a;--card:#1e293b;--border:rgba(255,255,255,0.1);
+      --accent:#7c3aed;--accent-hover:#6d28d9;--accent-light:rgba(124,58,237,0.15);
+      --text:#f1f5f9;--text-muted:#94a3b8;
+      --danger:#ef4444;--success:#10b981;
+      --radius:14px;--radius-sm:10px;
+    }
     html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+    /* Nav */
     .top-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,23,42,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 20px}
     .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:1rem;font-weight:800;color:var(--text)}
     .nav-logo img{width:28px;height:28px;border-radius:50%}
     .nav-signin{font-size:0.85rem;color:var(--accent);text-decoration:none;font-weight:600}
+    /* Page */
     .page-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:72px 20px 40px}
+    /* Onboarding container */
     #onboarding{width:100%;max-width:420px}
+    /* Step dots */
     .step-dots{display:flex;justify-content:center;gap:8px;margin-bottom:28px}
     .step-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .2s}
     .step-dot.active{background:var(--accent);width:24px;border-radius:4px}
     .step-dot.done{background:var(--accent);opacity:0.5}
+    /* Steps */
     .onboarding-step{display:none;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px 28px;flex-direction:column}
     .onboarding-step.active{display:flex}
     .step-header{text-align:center;margin-bottom:28px}
-    .step-header h2{font-size:1.6rem;font-weight:800;color:var(--text);margin-bottom:8px}
-    .step-header p{font-size:0.9rem;color:var(--text-muted)}
+    .step-header h2{font-size:1.6rem;font-weight:800;color:#ffffff;margin-bottom:8px}
+    .step-header p{font-size:0.9rem;color:#e2e8f0}
+    /* Fields */
     .field-group{margin-bottom:16px}
-    .field-label{display:block;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:6px}
     .field-input{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;font-size:0.95rem;color:var(--text);font-family:inherit;transition:border-color .15s}
     .field-input:focus{outline:none;border-color:var(--accent)}
-    textarea.field-input{resize:vertical;min-height:80px}
+    /* Buttons */
     .btn-primary{width:100%;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);padding:14px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s;margin-top:8px}
     .btn-primary:hover{background:var(--accent-hover)}
     .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
     .btn-secondary{width:100%;background:transparent;color:var(--text-muted);border:1.5px solid var(--border);border-radius:var(--radius);padding:12px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px}
-    .slug-preview-row{font-size:0.85rem;color:var(--text-muted);text-align:center;margin:8px 0 4px}
-    #slug-preview{color:var(--accent);font-weight:700}
-    .slug-status{font-size:0.82rem;min-height:18px;text-align:center;margin-top:4px}
-    .slug-ok{color:var(--success)} .slug-err{color:var(--danger)}
-    .pills-grid,.ob-interest-pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:16px}
-    .ob-pill{background:var(--bg);border:1.5px solid var(--border);border-radius:20px;padding:6px 14px;font-size:0.82rem;font-weight:600;color:var(--text-muted);cursor:pointer;font-family:inherit;transition:all .15s}
-    .ob-pill.selected{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
-    .theme-option{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
-    .theme-swatch{width:40px;height:40px;border-radius:10px;border:2px solid transparent;transition:all .15s}
-    .theme-option.selected .theme-swatch{border-color:var(--accent)}
-    .theme-name{font-size:0.7rem;color:var(--text-muted);font-weight:600}
-    #pw-error{font-size:0.85rem;color:var(--danger);min-height:16px;text-align:center;margin:4px 0}
-    #ob-board-url{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;font-family:monospace;font-size:0.9rem;color:var(--accent);text-align:center;margin-bottom:8px}
+    .btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+    /* Slug feedback */
+    .slug-feedback{font-size:0.82rem;min-height:18px;text-align:center;margin-top:6px}
+    .slug-feedback.ok{color:var(--success)}
+    .slug-feedback.error{color:var(--danger)}
+    .slug-feedback.checking{color:var(--text-muted)}
+    /* Error text */
+    #pw-error{font-size:0.85rem;color:var(--danger);min-height:16px;text-align:center;margin:4px 0 8px}
+    /* Board URL display */
+    #ob-board-url{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;font-family:monospace;font-size:0.9rem;color:var(--accent);text-align:center;margin-bottom:16px;word-break:break-all}
+    /* Ready checkmark */
+    .ready-icon{font-size:3rem;text-align:center;margin-bottom:8px}
   </style>
 </head>
 <body>
+
 <nav class="top-nav">
-  <a href="/" class="nav-logo"><img src="/assets/pal-brain.png" alt="Pal"> Pal</a>
+  <a href="/" class="nav-logo">
+    <img src="/assets/pal-brain.png" alt="Pal">
+    Pal
+  </a>
   <a href="/signin" class="nav-signin">Sign in →</a>
 </nav>
+
 <div class="page-wrap">
-  
+  <div id="onboarding">
+
+    <!-- Step dots -->
+    <div class="step-dots">
+      <div class="step-dot active" id="dot-0"></div>
+      <div class="step-dot" id="dot-1"></div>
+      <div class="step-dot" id="dot-2"></div>
+    </div>
+
+    <!-- Step 0: Your link -->
+    <div class="onboarding-step active" id="ob-step-0">
+      <div class="step-header">
+        <div style="margin:0 auto 14px;width:64px;height:64px;">
+          <img src="/assets/pal-brain.png" style="width:64px;height:64px;object-fit:contain;border-radius:50%;filter:drop-shadow(0 0 10px rgba(124,58,237,0.5));">
+        </div>
+        <h2>Your Pal link</h2>
+        <p>Pick your personal address — takes 30 seconds.</p>
+      </div>
+      <div class="field-group">
+        <input class="field-input" id="ob-slug" type="text" placeholder="yourname" maxlength="32"
+          autocomplete="off" autocapitalize="none" spellcheck="false"
+          style="text-align:center;font-size:1.1rem;font-weight:600;">
+        <p style="margin:10px 0 0;font-size:0.9rem;color:var(--text-muted);text-align:center;">
+          <strong style="color:var(--accent);"><span id="slug-preview">yourname</span>.getbotpacks.com</strong>
+        </p>
+        <div class="slug-feedback" id="slug-feedback"></div>
+      </div>
+      <button class="btn-primary" id="ob-step0-next" disabled>Set password →</button>
+    </div>
+
+    <!-- Step 1: Password -->
+    <div class="onboarding-step" id="ob-step-1">
+      <div class="step-header">
+        <div style="margin:0 auto 14px;width:64px;height:64px;">
+          <img src="/assets/pal-brain.png" style="width:64px;height:64px;object-fit:contain;border-radius:50%;filter:drop-shadow(0 0 10px rgba(124,58,237,0.5));">
+        </div>
+        <h2>Choose your password</h2>
+        <p>Your Pal is private — only you can access it.</p>
+      </div>
+      <div class="field-group">
+        <input class="field-input" id="ob-password" type="password"
+          placeholder="At least 8 characters" minlength="8" autocomplete="new-password">
+      </div>
+      <div class="field-group">
+        <input class="field-input" id="ob-password-confirm" type="password"
+          placeholder="Confirm password" autocomplete="new-password">
+      </div>
+      <div id="pw-error"></div>
+      <button class="btn-primary" id="ob-step1-next">Create my Pal →</button>
+      <button class="btn-secondary" id="ob-step1-back">← Back</button>
+    </div>
+
+    <!-- Step 2: Ready -->
+    <div class="onboarding-step" id="ob-step-2">
+      <div class="step-header" style="padding-top:16px;">
+        <div class="ready-icon">🎉</div>
+        <div style="margin:0 auto 14px;width:72px;height:72px;">
+          <img src="/assets/pal-brain.png" style="width:72px;height:72px;object-fit:contain;border-radius:50%;filter:drop-shadow(0 0 16px rgba(124,58,237,0.7));">
+        </div>
+        <h2>Your Pal is ready.</h2>
+        <p>Smart like GPT — but with hands to do stuff.</p>
+      </div>
+      <div id="ob-board-url"></div>
+      <button class="btn-primary" id="ob-start-chat">Start chatting →</button>
+    </div>
+
+  </div>
 </div>
+
 <script>
-const PAL_SLUG = '';
-let obCurrentStep = 0, slugAvailable = false, obSelectedTheme = 'midnight', slugCheckTimer = null;
+'use strict';
 
-function setObStep(n) {
-  document.querySelectorAll('.onboarding-step').forEach((e,i) => e.classList.toggle('active', i===n));
-  document.querySelectorAll('.step-dot').forEach((d,i) => { d.classList.toggle('active',i===n); d.classList.toggle('done',i<n); });
-  obCurrentStep = n;
-  window.scrollTo({top:0,behavior:'smooth'});
+let slugAvailable = false;
+let slugCheckTimer = null;
+let currentSlug = '';
+
+// ── Step navigation ────────────────────────────────────────────
+function setStep(n) {
+  document.querySelectorAll('.onboarding-step').forEach((el, i) => {
+    el.classList.toggle('active', i === n);
+  });
+  ['dot-0','dot-1','dot-2'].forEach((id, i) => {
+    const d = document.getElementById(id);
+    if (!d) return;
+    d.classList.toggle('active', i === n);
+    d.classList.toggle('done', i < n);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-function saveOnboardingProgress(s,d) { try{localStorage.setItem('pal_onboarding',JSON.stringify({step:s,data:d,ts:Date.now()}))}catch{} }
-function clearOnboardingProgress() { try{localStorage.removeItem('pal_onboarding')}catch{} }
-function showApp() { window.location.href = 'https://' + document.getElementById('ob-slug').value.trim() + '.getbotpacks.com'; }
 
-document.getElementById('ob-step0-next').addEventListener('click', () => {
-  if (!slugAvailable) return;
-  const slug = document.getElementById('ob-slug').value.trim();
-  saveOnboardingProgress(1, { slug, theme: obSelectedTheme });
-  setObStep(1);
-});
+// ── Slug input ─────────────────────────────────────────────────
+document.getElementById('ob-slug').addEventListener('input', function() {
+  const val = this.value.toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 32);
+  if (this.value !== val) this.value = val;
 
-// Slug input
-document.getElementById('ob-slug').addEventListener('input', e => {
-  const val = e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '');
-  e.target.value = val;
   const preview = document.getElementById('slug-preview');
   if (preview) preview.textContent = val || 'yourname';
-  const btn = document.getElementById('ob-step0-next');
+
   const fb = document.getElementById('slug-feedback');
-  const suggestionsEl = document.getElementById('slug-suggestions');
-  btn.disabled = true;
+  const btn = document.getElementById('ob-step0-next');
   slugAvailable = false;
-  if (suggestionsEl) suggestionsEl.style.display = 'none';
+  btn.disabled = true;
+
   clearTimeout(slugCheckTimer);
+
   if (val.length < 3) {
-    fb.textContent = val.length ? 'Too short - minimum 3 characters.' : '';
+    fb.textContent = val.length ? 'Too short — minimum 3 characters.' : '';
     fb.className = 'slug-feedback error';
     return;
   }
+
   fb.textContent = 'Checking...';
   fb.className = 'slug-feedback checking';
+
   slugCheckTimer = setTimeout(async () => {
     try {
-      const res = await fetch(`/api/slug-check?slug=${encodeURIComponent(val)}`);
+      const res = await fetch('/api/slug-check?slug=' + encodeURIComponent(val));
       const data = await res.json();
       if (data.available) {
-        fb.textContent = `✓ ${val}.getbotpacks.com is available!`;
+        fb.textContent = '✓ ' + val + '.getbotpacks.com is available!';
         fb.className = 'slug-feedback ok';
         slugAvailable = true;
         btn.disabled = false;
-        if (suggestionsEl) suggestionsEl.style.display = 'none';
+        currentSlug = val;
       } else {
-        fb.textContent = data.reason || 'That address is taken.';
+        fb.textContent = data.reason || 'That address is taken — try another.';
         fb.className = 'slug-feedback error';
-        if (suggestionsEl) {
-          const alts = [val + '1', val + '_me', val + '2026'];
-          suggestionsEl.innerHTML = '<span style="font-size:0.9rem;color:var(--text-muted);margin-right:6px;">Try instead:</span>' +
-            alts.map(a => `<button class="slug-alt-pill" data-slug="${a}" style="display:inline-block;margin:2px 4px 2px 0;padding:3px 10px;background:var(--card,#f1f5f9);border:1px solid var(--border,#e2e8f0);border-radius:99px;font-size:0.88rem;color:var(--text-muted,#64748b);cursor:pointer;">${a}</button>`).join('');
-          suggestionsEl.style.display = 'block';
-          suggestionsEl.querySelectorAll('.slug-alt-pill').forEach(pill => {
-            pill.addEventListener('click', () => {
-              const slugInput = document.getElementById('ob-slug');
-              slugInput.value = pill.dataset.slug;
-              slugInput.dispatchEvent(new Event('input'));
-            });
-          });
-        }
       }
     } catch {
       fb.textContent = 'Could not check availability. Please try again.';
       fb.className = 'slug-feedback error';
     }
-  }, 500);
+  }, 450);
 });
 
-// Theme picker
-document.querySelectorAll('.theme-option').forEach(opt => {
-  opt.addEventListener('click', () => {
-    document.querySelectorAll('.theme-option').forEach(o => o.classList.remove('selected'));
-    opt.classList.add('selected');
-    obSelectedTheme = opt.dataset.themeValue;
-    document.documentElement.setAttribute('data-theme', obSelectedTheme);
-  });
+// ── Step 0 → 1 ────────────────────────────────────────────────
+document.getElementById('ob-step0-next').addEventListener('click', function() {
+  if (!slugAvailable) return;
+  currentSlug = document.getElementById('ob-slug').value.trim();
+  setStep(1);
 });
 
-// Step 1 → 2 (password → done)
-document.getElementById('ob-step1-next').addEventListener('click', () => {
-  const pw = document.getElementById('ob-password').value;
+// ── Step 1 → provision ────────────────────────────────────────
+document.getElementById('ob-step1-next').addEventListener('click', async function() {
+  const pw  = document.getElementById('ob-password').value;
   const pw2 = document.getElementById('ob-password-confirm').value;
-  const errEl = document.getElementById('pw-error');
-  if (pw.length < 8) { errEl.textContent = 'Password must be at least 8 characters.'; return; }
-  if (pw !== pw2) { errEl.textContent = 'Passwords do not match.'; return; }
-  errEl.textContent = '';
-  setObStep(2); // go to "about you" step
-});
-document.getElementById('ob-step1-back').addEventListener('click', () => setObStep(0));
-document.getElementById('ob-step2-next').addEventListener('click', async () => { await provisionBoard(); });
-document.getElementById('ob-step2-back').addEventListener('click', () => setObStep(1));
+  const err = document.getElementById('pw-error');
+  err.textContent = '';
 
-// Interest pill toggle
-document.getElementById('ob-interest-pills').addEventListener('click', e => {
-  const pill = e.target.closest('.ob-pill');
-  if (pill) pill.classList.toggle('selected');
+  if (pw.length < 8) { err.textContent = 'Password must be at least 8 characters.'; return; }
+  if (pw !== pw2)    { err.textContent = 'Passwords do not match.'; return; }
+
+  await provisionBoard(pw);
 });
 
-async function provisionBoard() {
-  const btn = document.getElementById('ob-step2-next');
+document.getElementById('ob-step1-back').addEventListener('click', function() {
+  setStep(0);
+});
+
+// ── Provision ─────────────────────────────────────────────────
+async function provisionBoard(password) {
+  const btn = document.getElementById('ob-step1-next');
   btn.disabled = true;
   btn.textContent = 'Creating your Pal...';
 
-  const slug      = document.getElementById('ob-slug').value.trim();
-  const password  = document.getElementById('ob-password').value;
-  const userName  = (document.getElementById('ob-your-name')?.value || '').trim();
-  const selected  = [...document.querySelectorAll('.ob-pill.selected')].map(p => p.dataset.val);
-  const userNotes = selected.length ? `Interested in: ${selected.join(', ')}` : '';
+  const slug = currentSlug || document.getElementById('ob-slug').value.trim();
 
   try {
-    const res = await fetch(`/api/boards/provision?_pal=${slug}`, {
+    const res = await fetch('/api/boards/provision?_pal=' + encodeURIComponent(slug), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        slug, name: 'Pal', theme: 'light',
-        password, tier: 'starter',
-        userName, userNotes,
-        ref: localStorage.getItem('pal_ref') || undefined,
-      }),
+        slug,
+        name: 'Pal',
+        theme: 'light',
+        password,
+        tier: 'starter',
+        ref: (function(){ try { return localStorage.getItem('pal_ref') || undefined; } catch { return undefined; } })()
+      })
     });
+
     const data = await res.json();
+
     if (res.ok) {
-      PAL.settings.theme = obSelectedTheme;
-      if (userName) PAL.settings.userName = userName;
-      saveSettingsToStorage();
-      clearOnboardingProgress();
-      document.getElementById('ob-board-url').textContent = data.board?.url || `${slug}.getbotpacks.com`;
-      setObStep(3);
+      // Server-side login to get httpOnly cookie — _pal param lets board middleware resolve
+      try {
+        await fetch('/api/auth/login?_pal=' + encodeURIComponent(slug), {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password, slug })
+        });
+      } catch { /* non-fatal — user can log in manually */ }
+
+      const urlEl = document.getElementById('ob-board-url');
+      if (urlEl) urlEl.textContent = data.board?.url || (slug + '.getbotpacks.com');
+      setStep(2);
     } else {
-      const msg = data.errors ? data.errors.join(', ') : data.error || 'Could not create board.';
+      const msg = data.errors ? data.errors.join(', ') : (data.error || 'Could not create — please try again.');
       document.getElementById('pw-error').textContent = msg;
-      setObStep(1);
     }
   } catch {
     document.getElementById('pw-error').textContent = 'Network error. Please try again.';
-    setObStep(1);
   } finally {
     btn.disabled = false;
-    btn.textContent = 'Almost done →';
+    btn.textContent = 'Create my Pal →';
   }
 }
 
-document.getElementById('ob-start-chat').addEventListener('click', () => {
-  const slug = document.getElementById('ob-slug').value.trim();
-  window.location.href = `https://${slug}.getbotpacks.com`;
+// ── Step 2: go to chat ────────────────────────────────────────
+document.getElementById('ob-start-chat').addEventListener('click', function() {
+  const slug = currentSlug || document.getElementById('ob-slug').value.trim();
+  if (slug) window.location.href = 'https://' + slug + '.getbotpacks.com';
 });
 
-// ── Chat ───────────────────────────────────────────────────────
-const chatInput = document.getElementById('chat-input');
-const sendBtn = document.getElementById('send-btn');
-const chatMessages = document.getElementById('chat-messages');
-
-// Auto-resize textarea
-chatInput.addEventListener('input', () => {
-  chatInput.style.height = 'auto';
-  chatInput.style.height = Math.min(chatInput.scrollHeight, 160) + 'px';
-  updateInputHeight(); // keep chat-messages bottom in sync
-});
-
-chatInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    sendMessage();
-  }
-});
-
-sendBtn.addEventListener('click', sendMessage);
-
-// Nav pills
-// Photo pill
-document.getElementById('pill-photo').addEventListener('click', () => {
-  document.getElementById('file-photo').click();
-});
-
-// PDF pill
-document.getElementById('pill-pdf').addEventListener('click', () => {
-  document.getElementById('file-pdf').click();
-});
-
-document.getElementById('pill-projects').addEventListener('click', () => {
-  switchTab('projects');
-});
-// Settings pill removed - use bottom nav Settings tab instead
-
-// Slug check
-document.getElementById('ob-slug').addEventListener('input', e => {
-  const val = e.target.value.toLowerCase().replace(/[^a-z0-9-]/g,'').slice(0,32);
-  if(e.target.value !== val) e.target.value = val;
-  const preview = document.getElementById('slug-preview');
-  if(preview) preview.textContent = val || 'yourname';
-  const statusEl = document.getElementById('slug-status');
-  const nextBtn = document.getElementById('ob-step0-next');
-  slugAvailable = false;
-  if(nextBtn) nextBtn.disabled = true;
-  if(!val || val.length < 3) { if(statusEl){statusEl.textContent=val.length?'At least 3 characters':'';statusEl.className='slug-status slug-err'} return; }
-  clearTimeout(slugCheckTimer);
-  slugCheckTimer = setTimeout(async () => {
-    try {
-      const r = await fetch(`/api/slug-check?slug=${encodeURIComponent(val)}`);
-      const d = await r.json();
-      slugAvailable = d.available;
-      if(statusEl){ statusEl.textContent = d.available ? `✓ ${val}.getbotpacks.com is available!` : 'Already taken — try another'; statusEl.className='slug-status '+(d.available?'slug-ok':'slug-err'); }
-      if(nextBtn) nextBtn.disabled = !d.available;
-    } catch {}
-  }, 400);
-});
-
-// Theme
-document.querySelectorAll('.theme-option').forEach(o => o.addEventListener('click', () => {
-  document.querySelectorAll('.theme-option').forEach(x => x.classList.remove('selected'));
-  o.classList.add('selected'); obSelectedTheme = o.dataset.themeValue;
-  document.documentElement.setAttribute('data-theme', obSelectedTheme);
-}));
-
-// Pills
-document.getElementById('ob-interest-pills')?.addEventListener('click', e => {
-  const p = e.target.closest('.ob-pill'); if(p) p.classList.toggle('selected');
-});
-
-async function provisionBoard() {
-  const btn = document.getElementById('ob-step2-next');
-  if(btn) { btn.disabled=true; btn.textContent='Creating your Pal...'; }
-  const slug = document.getElementById('ob-slug').value.trim();
-  const userName = (document.getElementById('ob-your-name')?.value||'').trim();
-  const selected = [...document.querySelectorAll('.ob-pill.selected')].map(p=>p.dataset.val);
-  const ref = localStorage.getItem('pal_ref')||undefined;
+// ── Ref tracking ──────────────────────────────────────────────
+(function() {
   try {
-    const res = await fetch('/api/boards/provision', {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({slug, name:'Pal', theme:obSelectedTheme, password:document.getElementById('ob-password').value, tier:'starter', userName, userNotes:selected.join(', '), ref})
-    });
-    const data = await res.json();
-    if(res.ok) {
-      clearOnboardingProgress();
-      // Set session cookie for .getbotpacks.com — user lands in chat not login
-      if(data.sessionToken) {
-        try {
-          const exp = new Date(Date.now() + 30*24*60*60*1000).toUTCString();
-          document.cookie = `pal_session=${data.sessionToken}; domain=.getbotpacks.com; path=/; secure; samesite=none; expires=${exp}`;
-        } catch {}
-      }
-      const u = document.getElementById('ob-board-url');
-      if(u) u.textContent = data.board?.url || `${slug}.getbotpacks.com`;
-      setObStep(3);
-    } else {
-      const msg = data.errors?data.errors.join(', '):data.error||'Could not create. Try again.';
-      const errEl = document.getElementById('pw-error'); if(errEl) errEl.textContent=msg;
-      setObStep(1);
-      if(btn) { btn.disabled=false; btn.textContent='Almost done →'; }
-    }
-  } catch {
-    const errEl = document.getElementById('pw-error'); if(errEl) errEl.textContent='Network error. Please try again.';
-    setObStep(1);
-    if(btn) { btn.disabled=false; btn.textContent='Almost done →'; }
-  }
-}
-
-document.getElementById('ob-start-chat')?.addEventListener('click', () => {
-  const slug = document.getElementById('ob-slug').value.trim();
-  if(slug) window.location.href = `https://${slug}.getbotpacks.com`;
-});
-
-(function(){ try{ const r=new URLSearchParams(window.location.search).get('ref'); if(r) localStorage.setItem('pal_ref',r.toLowerCase()); }catch{} })();
+    const ref = new URLSearchParams(window.location.search).get('ref');
+    if (ref) localStorage.setItem('pal_ref', ref.toLowerCase());
+  } catch {}
+})();
 </script>
 </body>
 </html>

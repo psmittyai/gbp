@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Sign In — Pal by GetBotPacks</title>
+  <meta name="description" content="Sign in to your Pal.">
+  <link rel="icon" href="/assets/pal-brain.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0f172a;--card:#1e293b;--border:rgba(255,255,255,0.1);
+      --accent:#7c3aed;--accent-hover:#6d28d9;
+      --text:#f1f5f9;--text-muted:#94a3b8;
+      --danger:#ef4444;
+      --radius:14px;--radius-sm:10px;
+    }
+    html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+    .top-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,23,42,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 20px}
+    .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-size:1rem;font-weight:800;color:var(--text)}
+    .nav-logo img{width:28px;height:28px;border-radius:50%}
+    .nav-link{font-size:0.85rem;color:var(--accent);text-decoration:none;font-weight:600}
+    .page-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:72px 20px 40px}
+    .card{width:100%;max-width:380px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px 28px;display:flex;flex-direction:column;gap:20px}
+    .card-header{text-align:center}
+    .card-header img{width:64px;height:64px;object-fit:contain;border-radius:50%;filter:drop-shadow(0 0 10px rgba(124,58,237,0.5));margin-bottom:14px}
+    .card-header h2{font-size:1.5rem;font-weight:800;color:#ffffff;margin-bottom:6px}
+    .card-header p{font-size:0.9rem;color:#e2e8f0}
+    .field-input{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;font-size:0.95rem;color:var(--text);font-family:inherit;transition:border-color .15s}
+    .field-input:focus{outline:none;border-color:var(--accent)}
+    .btn-primary{width:100%;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);padding:14px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s}
+    .btn-primary:hover{background:var(--accent-hover)}
+    .error{font-size:0.85rem;color:var(--danger);text-align:center;min-height:18px}
+    .footer-link{text-align:center;font-size:0.85rem;color:var(--text-muted)}
+    .footer-link a{color:var(--accent);text-decoration:none;font-weight:600}
+    .slug-hint{font-size:0.82rem;color:var(--text-muted);text-align:center}
+    #slug-preview-row{font-size:0.88rem;color:var(--accent);text-align:center;font-weight:600;min-height:20px}
+  </style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="/" class="nav-logo">
+    <img src="/assets/pal-brain.png" alt="Pal">
+    Pal
+  </a>
+  <a href="/get-started" class="nav-link">Get Started →</a>
+</nav>
+
+<div class="page-wrap">
+  <div class="card">
+    <div class="card-header">
+      <img src="/assets/pal-brain.png" alt="Pal">
+      <h2>Welcome back</h2>
+      <p>Enter your Pal address to sign in.</p>
+    </div>
+
+    <div>
+      <input class="field-input" id="slug-input" type="text"
+        placeholder="yourname" maxlength="32"
+        autocomplete="off" autocapitalize="none" spellcheck="false"
+        style="text-align:center;font-size:1.1rem;font-weight:600;">
+      <div id="slug-preview-row" style="margin-top:8px;"></div>
+    </div>
+
+    <div class="error" id="signin-error"></div>
+
+    <button class="btn-primary" id="signin-btn" disabled>Go to my Pal →</button>
+
+    <div class="footer-link">
+      Don't have a Pal yet? <a href="/get-started">Get started free →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+const slugInput  = document.getElementById('slug-input');
+const previewRow = document.getElementById('slug-preview-row');
+const signinBtn  = document.getElementById('signin-btn');
+const errorEl    = document.getElementById('signin-error');
+
+slugInput.addEventListener('input', function() {
+  const val = this.value.toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 32);
+  if (this.value !== val) this.value = val;
+
+  if (val.length >= 3) {
+    previewRow.textContent = val + '.getbotpacks.com';
+    signinBtn.disabled = false;
+    errorEl.textContent = '';
+  } else {
+    previewRow.textContent = '';
+    signinBtn.disabled = true;
+  }
+});
+
+slugInput.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !signinBtn.disabled) goToBoard();
+});
+
+signinBtn.addEventListener('click', goToBoard);
+
+function goToBoard() {
+  const slug = slugInput.value.trim();
+  if (slug.length < 3) {
+    errorEl.textContent = 'Enter your Pal address to continue.';
+    return;
+  }
+  window.location.href = 'https://' + slug + '.getbotpacks.com';
+}
+
+// Auto-fill from URL param: /signin?pal=yourname
+(function() {
+  try {
+    const p = new URLSearchParams(window.location.search).get('pal');
+    if (p) {
+      slugInput.value = p.toLowerCase().replace(/[^a-z0-9-]/g, '');
+      slugInput.dispatchEvent(new Event('input'));
+    }
+  } catch {}
+})();
+</script>
+</body>
+</html>
