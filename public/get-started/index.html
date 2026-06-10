@@ -42,7 +42,6 @@
     .pills-grid,.ob-interest-pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:16px}
     .ob-pill{background:var(--bg);border:1.5px solid var(--border);border-radius:20px;padding:6px 14px;font-size:0.82rem;font-weight:600;color:var(--text-muted);cursor:pointer;font-family:inherit;transition:all .15s}
     .ob-pill.selected{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
-    .theme-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
     .theme-option{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
     .theme-swatch{width:40px;height:40px;border-radius:10px;border:2px solid transparent;transition:all .15s}
     .theme-option.selected .theme-swatch{border-color:var(--accent)}
@@ -87,9 +86,9 @@
   <!-- Step 2: Password + Theme -->
   <div class="onboarding-step" id="ob-step-1">
     <div class="step-header">
-      <div style="font-size:2.4rem;margin-bottom:12px;">🔒</div>
-      <h2>Protect your Pal</h2>
-      <p>Set a password and pick a look.</p>
+      <div style="margin:0 auto 12px;width:60px;height:60px;"><img src="/assets/pal-brain.png" style="width:60px;height:60px;object-fit:contain;border-radius:50%;filter:drop-shadow(0 0 8px rgba(124,58,237,0.5));"></div>
+      <h2>Choose your password</h2>
+      <p>Your Pal is private — only you can access it.</p>
     </div>
     <div class="field-group">
       <label class="field-label" for="ob-password">Password</label>
@@ -100,13 +99,7 @@
       <input class="field-input" id="ob-password-confirm" type="password" placeholder="Same password again" autocomplete="new-password">
     </div>
     <div id="pw-error" style="font-size:0.9rem;color:var(--danger);min-height:16px;"></div>
-    <div class="field-group" style="margin-top:4px;">
-      <label class="field-label">Theme</label>
-      <div class="theme-grid">
-        <div class="theme-option selected" data-theme-value="light">
-          <div class="theme-swatch" style="background:#ffffff;border:2px solid #e2e8f0;"></div>
-          <div class="theme-name">Light</div>
-        </div>
+    
         <div class="theme-option" data-theme-value="midnight">
           <div class="theme-swatch" style="background:#0f172a;"></div>
           <div class="theme-name">Midnight</div>
@@ -301,7 +294,7 @@ async function provisionBoard() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        slug, name: 'Pal', theme: obSelectedTheme,
+        slug, name: 'Pal', theme: 'light',
         password, tier: 'starter',
         userName, userNotes,
         ref: localStorage.getItem('pal_ref') || undefined,
