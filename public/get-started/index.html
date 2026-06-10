@@ -147,6 +147,7 @@
 let slugAvailable = false;
 let slugCheckTimer = null;
 let currentSlug = '';
+let currentSessionToken = '';
 
 // ── Step navigation ────────────────────────────────────────────
 function setStep(n) {
@@ -268,6 +269,8 @@ async function provisionBoard(password) {
 
       const urlEl = document.getElementById('ob-board-url');
       if (urlEl) urlEl.textContent = data.board?.url || (slug + '.getbotpacks.com');
+      // Store sessionToken for use when Start chatting is clicked
+      if (data.sessionToken) currentSessionToken = data.sessionToken;
       setStep(2);
     } else {
       const msg = data.errors ? data.errors.join(', ') : (data.error || 'Could not create — please try again.');
@@ -284,7 +287,12 @@ async function provisionBoard(password) {
 // ── Step 2: go to chat ────────────────────────────────────────
 document.getElementById('ob-start-chat').addEventListener('click', function() {
   const slug = currentSlug || document.getElementById('ob-slug').value.trim();
-  if (slug) window.location.href = 'https://' + slug + '.getbotpacks.com';
+  if (!slug) return;
+  // Pass sessionToken in URL so Pal app can activate cookie without login screen
+  const dest = currentSessionToken
+    ? 'https://' + slug + '.getbotpacks.com/?session=' + encodeURIComponent(currentSessionToken)
+    : 'https://' + slug + '.getbotpacks.com';
+  window.location.href = dest;
 });
 
 // ── Ref tracking ──────────────────────────────────────────────
