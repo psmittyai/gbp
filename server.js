@@ -46,7 +46,7 @@ app.all('/api/*', async (req, res) => {
       body:    ['GET','HEAD'].includes(req.method) ? undefined : JSON.stringify(req.body),
     });
 
-    // Forward cookies from Pal back to browser
+    // Forward status + headers
     const setCookie = proxyRes.headers.get('set-cookie');
     if (setCookie) res.setHeader('set-cookie', setCookie);
 
@@ -54,7 +54,21 @@ app.all('/api/*', async (req, res) => {
     res.setHeader('content-type', contentType);
     res.status(proxyRes.status);
 
-    if (contentType.includes('application/json')) {
+    // SSE / streaming response — pipe directly, never buffer
+    if (contentType.includes('text/event-stream') || contentType.includes('text/plain')) {
+      res.setHeader('cache-control', 'no-cache');
+      res.setHeader('x-accel-buffering', 'no'); // disable nginx buffering
+      res.flushHeaders();
+      const reader = proxyRes.body.getReader();
+      const pump = async () => {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) { res.end(); break; }
+          res.write(Buffer.from(value));
+        }
+      };
+      await pump();
+    } else if (contentType.includes('application/json')) {
       const data = await proxyRes.json();
       res.json(data);
     } else {
