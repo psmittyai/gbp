@@ -716,7 +716,7 @@
   </section>
 
   <!-- PAL — MEET YOUR PAL SECTION -->
-  <section class="pal-section" id="pal" style="position:relative;overflow:hidden;background:linear-gradient(180deg, rgba(10,8,40,0.85) 0%, rgba(15,10,46,0.75) 100%);padding:80px 24px;text-align:center;backdrop-filter:blur(2px);">
+  <section class="pal-section" id="pal" style="position:relative;overflow:hidden;background:linear-gradient(180deg, #12103a 0%, #0d0b2e 100%);padding:80px 24px;text-align:center;">
 
     <!-- Earth globe background -->
     <div style="position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;">
@@ -730,10 +730,24 @@
       <!-- Stars -->
       <div style="position:absolute;inset:0;background-image:radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.7) 0%, transparent 100%), radial-gradient(1px 1px at 25% 35%, rgba(255,255,255,0.5) 0%, transparent 100%), radial-gradient(1px 1px at 40% 10%, rgba(255,255,255,0.6) 0%, transparent 100%), radial-gradient(1px 1px at 55% 50%, rgba(255,255,255,0.4) 0%, transparent 100%), radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.7) 0%, transparent 100%), radial-gradient(1px 1px at 85% 40%, rgba(255,255,255,0.5) 0%, transparent 100%), radial-gradient(1px 1px at 15% 65%, rgba(255,255,255,0.6) 0%, transparent 100%), radial-gradient(1px 1px at 90% 75%, rgba(255,255,255,0.4) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 80% 10%, rgba(196,181,253,0.8) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 5% 90%, rgba(196,181,253,0.6) 0%, transparent 100%);"></div>
     </div>
-    <!-- Real Earth image - bottom center translucent globe -->
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/The_Blue_Marble_%28remastered%29.jpg/800px-The_Blue_Marble_%28remastered%29.jpg"
-      alt="" style="position:absolute;bottom:-25%;left:50%;transform:translateX(-50%);width:580px;height:580px;border-radius:50%;opacity:0.2;object-fit:cover;pointer-events:none;z-index:0;filter:saturate(1.3) brightness(0.9);">
-    <div style="position:absolute;bottom:-15%;left:50%;transform:translateX(-50%);width:620px;height:620px;border-radius:50%;background:radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%);pointer-events:none;z-index:0;"></div>
+    <!-- Earth globe - CSS rendered with continent shapes -->
+    <div style="position:absolute;bottom:-28%;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;pointer-events:none;z-index:0;overflow:hidden;opacity:0.28;">
+      <!-- Ocean base -->
+      <div style="position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 40% 35%, #1a5fb4 0%, #0d3b7a 40%, #071e3d 100%);"></div>
+      <!-- Continents -->
+      <div style="position:absolute;top:15%;left:8%;width:28%;height:35%;background:#2d7a3a;border-radius:40% 60% 55% 45%/50% 40% 60% 50%;opacity:0.9;transform:rotate(-10deg);"></div>
+      <div style="position:absolute;top:20%;left:38%;width:22%;height:40%;background:#3a8a45;border-radius:45% 55% 40% 60%/45% 55% 45% 55%;opacity:0.85;transform:rotate(5deg);"></div>
+      <div style="position:absolute;top:18%;left:58%;width:32%;height:38%;background:#2d7a3a;border-radius:50% 50% 45% 55%/55% 45% 55% 45%;opacity:0.88;"></div>
+      <div style="position:absolute;top:55%;left:25%;width:18%;height:28%;background:#4a9a55;border-radius:45% 55% 50% 50%;opacity:0.8;transform:rotate(-5deg);"></div>
+      <div style="position:absolute;top:60%;left:48%;width:12%;height:20%;background:#3a8a45;border-radius:50%;opacity:0.75;"></div>
+      <!-- Ice caps -->
+      <div style="position:absolute;top:-2%;left:20%;width:60%;height:15%;background:rgba(255,255,255,0.3);border-radius:50%;"></div>
+      <div style="position:absolute;bottom:-2%;left:25%;width:50%;height:12%;background:rgba(255,255,255,0.25);border-radius:50%;"></div>
+      <!-- Atmosphere glow -->
+      <div style="position:absolute;inset:-4%;border-radius:50%;box-shadow:inset 0 0 40px rgba(100,180,255,0.3), 0 0 60px rgba(59,130,246,0.15);"></div>
+    </div>
+    <!-- Purple glow over earth -->
+    <div style="position:absolute;bottom:-18%;left:50%;transform:translateX(-50%);width:640px;height:640px;border-radius:50%;background:radial-gradient(circle, rgba(124,58,237,0.1) 0%, transparent 70%);pointer-events:none;z-index:0;"></div>
         <!-- Universe background: stars + nebula -->
     <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%, rgba(124,58,237,0.22) 0%, transparent 55%), radial-gradient(ellipse at 70% 60%, rgba(59,130,246,0.12) 0%, transparent 50%), radial-gradient(ellipse at 50% 20%, rgba(167,139,250,0.1) 0%, transparent 40%);pointer-events:none;z-index:0;"></div>
     <!-- Star field -->
@@ -755,7 +769,7 @@
       <h2 style="font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;color:#ffffff;line-height:1.1;letter-spacing:-0.03em;margin-bottom:16px;">Introducing Pal</h2>
 
       <p style="font-size:clamp(1rem,2.5vw,1.2rem);color:#94a3b8;max-width:560px;margin:0 auto 12px;line-height:1.7;">
-        Smart like GPT, Perplexity, and Gemini — but with <strong style="color:#f97316;">hands to do stuff.</strong>
+        Smart like GPT, Perplexity, and Gemini — but <strong style="color:#f97316;">with hands to do stuff.</strong>
       </p>
       <p style="font-size:0.95rem;color:#64748b;max-width:480px;margin:0 auto 36px;line-height:1.6;">
         Remembers you. Installs skills. Connects to your apps. Builds your projects. Gets smarter every conversation.
