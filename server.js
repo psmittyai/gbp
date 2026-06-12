@@ -81,6 +81,14 @@ app.all('/api/*', async (req, res) => {
   }
 });
 
+// ── pal.getbotpacks.com — serve Pal landing page ─────────────
+app.use((req, res, next) => {
+  if (req.hostname === 'pal.getbotpacks.com') {
+    return res.sendFile(path.join(__dirname, 'public', 'pal.html'));
+  }
+  next();
+});
+
 // ── Static assets (css, images, fonts) ────────────────────────
 app.use(express.static(path.join(__dirname, 'public')));
 
