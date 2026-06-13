@@ -81,12 +81,22 @@ app.all('/api/*', async (req, res) => {
   }
 });
 
-// ── pal.getbotpacks.com — serve Pal landing page ─────────────
+// ── pal.getbotpacks.com — subdomain-aware routing ────────────
 app.use((req, res, next) => {
-  if (req.hostname === 'pal.getbotpacks.com') {
-    return res.sendFile(path.join(__dirname, 'public', 'pal.html'));
+  if (req.hostname !== 'pal.getbotpacks.com') return next();
+
+  // Blog index
+  if (req.path === '/blog' || req.path === '/blog/') {
+    return res.sendFile(path.join(__dirname, 'public', 'pal-blog', 'index.html'));
   }
-  next();
+  // Individual blog post
+  if (req.path.startsWith('/blog/')) {
+    const slug = req.path.slice(6); // strip /blog/
+    const file = path.join(__dirname, 'public', 'pal-blog', slug);
+    return res.sendFile(file, err => { if (err) res.status(404).send('Not found'); });
+  }
+  // Default: Pal hero page
+  return res.sendFile(path.join(__dirname, 'public', 'pal.html'));
 });
 
 // ── Static assets (css, images, fonts) ────────────────────────
