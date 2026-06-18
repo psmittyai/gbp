@@ -28,6 +28,58 @@ app.use((req, res, next) => {
 // ── Health check ───────────────────────────────────────────────
 app.get('/health', (req, res) => res.json({ ok: true, service: 'gbp' }));
 
+// ── LinkedIn OAuth ───────────────────────────────────────────────
+app.get('/linkedin-auth', (req, res) => {
+  const { URLSearchParams } = require('url');
+  const params = new URLSearchParams({
+    response_type: 'code',
+    client_id:     process.env.LINKEDIN_CLIENT_ID || '86h323r1nfhqcd',
+    redirect_uri:  'https://getbotpacks.com/linkedin-callback',
+    scope:         'openid profile email w_member_social w_organization_social',
+    state:         'gbp-linkedin-auth',
+  });
+  res.redirect(`https://www.linkedin.com/oauth/v2/authorization?${params}`);
+});
+
+app.get('/linkedin-callback', async (req, res) => {
+  const { code, error } = req.query;
+  if (error) return res.send(`LinkedIn auth error: ${error}`);
+  if (!code) return res.send('No code received');
+  try {
+    const https = require('https');
+    const { URLSearchParams } = require('url');
+    const body = new URLSearchParams({
+      grant_type:    'authorization_code',
+      code,
+      redirect_uri:  'https://getbotpacks.com/linkedin-callback',
+      client_id:     process.env.LINKEDIN_CLIENT_ID || '86h323r1nfhqcd',
+      client_secret: process.env.LINKEDIN_CLIENT_SECRET,
+    }).toString();
+    const token = await new Promise((resolve, reject) => {
+      const r = https.request({
+        hostname: 'www.linkedin.com',
+        path: '/oauth/v2/accessToken',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': Buffer.byteLength(body) },
+      }, res2 => {
+        let d = '';
+        res2.on('data', c => d += c);
+        res2.on('end', () => resolve(JSON.parse(d)));
+      });
+      r.on('error', reject);
+      r.write(body);
+      r.end();
+    });
+    if (token.error) return res.send(`Token error: ${token.error} — ${token.error_description}`);
+    // Save token to volume
+    const fs = require('fs'), path2 = require('path');
+    const tokenFile = path2.join('/app/data', 'linkedin-token.json');
+    fs.mkdirSync(path2.dirname(tokenFile), { recursive: true });
+    fs.writeFileSync(tokenFile, JSON.stringify({ ...token, saved_at: Date.now() }, null, 2));
+    res.send(`<h2>✅ LinkedIn connected!</h2><p>Scopes: ${token.scope}</p><p>Token starts: ${token.access_token?.slice(0,30)}...</p><p>Expires in: ${token.expires_in}s</p>`);
+  } catch(e) { res.send(`Error: ${e.message}`); }
+});
+
 // ── Proxy all /api/* to Pal Railway ───────────────────────────
 // Pal Railway handles: /api/boards/provision, /api/auth/*, /api/slug-check, etc.
 app.all('/api/*', async (req, res) => {
