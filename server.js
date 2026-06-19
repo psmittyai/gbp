@@ -15,6 +15,11 @@ const PORT = process.env.PORT || 3200;
 const PAL_URL = process.env.PAL_RAILWAY_URL || 'https://wonderful-spontaneity-production-2f1f.up.railway.app';
 
 app.set('trust proxy', 1);
+
+// ── Stripe webhook: capture raw body BEFORE express.json parses it ─────────
+// Must be registered before app.use(express.json()) so the raw buffer is preserved
+app.use('/api/billing/webhook', express.raw({ type: 'application/json' }));
+
 app.use(express.json({ limit: '8mb' }));
 
 // ── Security headers ───────────────────────────────────────────
@@ -91,11 +96,19 @@ app.all('/api/*', async (req, res) => {
       'x-forwarded-host': 'getbotpacks.com',
     };
     if (req.headers.cookie) headers.cookie = req.headers.cookie;
+    // Forward Stripe signature header so webhook verification works
+    if (req.headers['stripe-signature']) headers['stripe-signature'] = req.headers['stripe-signature'];
+
+    // For Stripe webhook: req.body is a raw Buffer (not parsed JSON) — pass it as-is
+    // For all other routes: serialize the parsed JSON body
+    const bodyPayload = ['GET','HEAD'].includes(req.method)
+      ? undefined
+      : Buffer.isBuffer(req.body) ? req.body : JSON.stringify(req.body);
 
     const proxyRes = await fetch(targetUrl, {
       method:  req.method,
       headers,
-      body:    ['GET','HEAD'].includes(req.method) ? undefined : JSON.stringify(req.body),
+      body:    bodyPayload,
     });
 
     // Forward status + headers
