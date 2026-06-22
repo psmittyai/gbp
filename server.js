@@ -40,7 +40,7 @@ app.get('/linkedin-auth', (req, res) => {
     response_type: 'code',
     client_id:     process.env.LINKEDIN_CLIENT_ID || '86h323r1nfhqcd',
     redirect_uri:  'https://getbotpacks.com/linkedin-callback',
-    scope:         'openid profile email w_member_social w_organization_social',
+    scope:         'openid profile email w_member_social',
     state:         'gbp-linkedin-auth',
   });
   res.redirect(`https://www.linkedin.com/oauth/v2/authorization?${params}`);
