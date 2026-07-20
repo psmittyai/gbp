@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brent's Smart Site — Site Map & Visitor Flow</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #ffffff;
+      color: #0f172a;
+      line-height: 1.6;
+      padding: 0 16px 60px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ── */
+    .doc-header {
+      border-bottom: 3px solid #7c3aed;
+      padding: 36px 0 24px;
+      margin-bottom: 48px;
+    }
+    .doc-header .prepared-by {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #7c3aed;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .doc-header h1 {
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+    .doc-header .subtitle {
+      font-size: 14px;
+      color: #64748b;
+    }
+
+    /* ── Section headings ── */
+    .section-label {
+      display: inline-block;
+      background: #7c3aed;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 4px 12px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(20px, 3.5vw, 26px);
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+    .section-desc {
+      font-size: 14px;
+      color: #64748b;
+      margin-bottom: 32px;
+    }
+    .section-block {
+      margin-bottom: 56px;
+    }
+
+    /* ════════════════════════════════════
+       SECTION 1 — SITEMAP
+    ════════════════════════════════════ */
+
+    /* Root node */
+    .sitemap-root {
+      text-align: center;
+      margin-bottom: 0;
+    }
+    .site-root-card {
+      display: inline-block;
+      background: #0f172a;
+      color: #fff;
+      border-radius: 10px;
+      padding: 18px 36px;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+    }
+    .site-root-card .domain {
+      font-size: 12px;
+      color: #a78bfa;
+      font-weight: 500;
+      margin-top: 4px;
+    }
+
+    /* Connector lines */
+    .connector-v {
+      width: 2px;
+      height: 28px;
+      background: #7c3aed;
+      margin: 0 auto;
+    }
+    .connector-h-wrap {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 0;
+    }
+    /* horizontal bar across top of columns */
+    .h-bar {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 2px;
+      background: #7c3aed;
+      width: calc(100% - 40px);
+      max-width: 860px;
+    }
+
+    /* Home page card */
+    .home-card {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 0;
+    }
+    .card-home {
+      background: #fff;
+      border: 2px solid #7c3aed;
+      border-radius: 10px;
+      padding: 14px 28px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 15px;
+      color: #0f172a;
+      box-shadow: 0 2px 8px rgba(124,58,237,0.12);
+    }
+    .card-home .card-sub {
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 400;
+      margin-top: 3px;
+    }
+
+    /* Section banner */
+    .sections-banner {
+      background: #f5f3ff;
+      border: 1px solid #c4b5fd;
+      border-radius: 8px;
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 13px;
+      color: #5b21b6;
+      font-weight: 600;
+      margin: 0 auto;
+      max-width: 480px;
+    }
+    .sections-banner .banner-sub {
+      font-size: 12px;
+      color: #7c3aed;
+      font-weight: 400;
+    }
+
+    /* Page section cards row */
+    .page-cards-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+    .page-card {
+      background: #fff;
+      border: 2px solid #7c3aed;
+      border-radius: 10px;
+      padding: 16px 14px;
+      width: 160px;
+      min-width: 140px;
+      flex: 1 1 140px;
+      max-width: 180px;
+      box-shadow: 0 2px 8px rgba(124,58,237,0.10);
+      text-align: center;
+    }
+    .page-card .card-title {
+      font-weight: 800;
+      font-size: 13px;
+      color: #7c3aed;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .page-card .card-items {
+      font-size: 12px;
+      color: #475569;
+      line-height: 1.7;
+    }
+
+    /* AI sub-nodes */
+    .ai-subnodes {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin-top: 0;
+    }
+    .ai-sub-card {
+      background: #faf5ff;
+      border: 2px solid #a78bfa;
+      border-radius: 10px;
+      padding: 12px 20px;
+      width: 220px;
+      text-align: center;
+      font-size: 13px;
+    }
+    .ai-sub-card .sub-title {
+      font-weight: 700;
+      color: #7c3aed;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .ai-sub-card .sub-desc {
+      color: #64748b;
+      font-size: 12px;
+    }
+    .ai-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ════════════════════════════════════
+       SECTIONS 2 & 3 — PROCESS FLOWS
+    ════════════════════════════════════ */
+
+    .flow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .flow-step {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      position: relative;
+    }
+    /* vertical line down from step (except last) */
+    .flow-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 22px;
+      top: 48px;
+      bottom: -16px;
+      width: 2px;
+      background: #7c3aed;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      background: #7c3aed;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 16px;
+      margin-top: 2px;
+      position: relative;
+      z-index: 1;
+    }
+    .step-body {
+      background: #fff;
+      border: 2px solid #e2e8f0;
+      border-left: 4px solid #7c3aed;
+      border-radius: 10px;
+      padding: 16px 20px;
+      flex: 1;
+      margin-bottom: 28px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .step-body h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+    .step-body .step-context {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+    .step-body .step-example {
+      background: #f8fafc;
+      border-left: 3px solid #a78bfa;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: #475569;
+      border-radius: 4px;
+      font-style: italic;
+      margin-top: 8px;
+    }
+    .step-body .step-highlight {
+      display: inline-block;
+      background: #faf5ff;
+      color: #7c3aed;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+    }
+    .step-body .cta-pill {
+      display: inline-block;
+      background: #fbbf24;
+      color: #78350f;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 20px;
+      margin-top: 8px;
+    }
+    .step-body .pal-cmd {
+      background: #0f172a;
+      color: #a78bfa;
+      font-family: monospace;
+      font-size: 12px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-top: 8px;
+    }
+
+    /* Owner flow — simpler 2-col grid on desktop */
+    .owner-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .owner-card {
+      background: #fff;
+      border: 2px solid #e2e8f0;
+      border-top: 4px solid #7c3aed;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .owner-card .oc-num {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #7c3aed;
+      margin-bottom: 6px;
+    }
+    .owner-card h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+    .owner-card p {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 10px;
+    }
+    .owner-card .pal-cmd {
+      background: #0f172a;
+      color: #a78bfa;
+      font-family: monospace;
+      font-size: 12px;
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
+
+    /* ── Footer ── */
+    .doc-footer {
+      border-top: 1px solid #e2e8f0;
+      padding: 28px 0 12px;
+      text-align: center;
+      font-size: 13px;
+      color: #94a3b8;
+      margin-top: 48px;
+    }
+    .doc-footer a {
+      color: #7c3aed;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* ── Print ── */
+    @media print {
+      body { padding: 0; max-width: 100%; }
+      .page-card, .step-body, .owner-card { break-inside: avoid; }
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 600px) {
+      .page-cards-row { gap: 8px; }
+      .page-card { max-width: 100%; width: 100%; min-width: unset; flex: 1 1 calc(50% - 8px); }
+      .owner-grid { grid-template-columns: 1fr; }
+      .site-root-card { padding: 14px 20px; font-size: 15px; }
+      .ai-sub-card { width: 100%; max-width: 280px; }
+    }
+
+    /* divider */
+    .divider {
+      border: none;
+      border-top: 1px solid #f1f5f9;
+      margin: 8px 0 40px;
+    }
+
+    /* ── Proposal Header Block ── */
+    .proposal-header-block {
+      background: #f8fafc;
+      border-left: 5px solid #7c3aed;
+      border-radius: 8px;
+      padding: 24px 28px;
+      margin-bottom: 36px;
+    }
+    .proposal-header-block .ph-row {
+      display: flex;
+      gap: 8px;
+      font-size: 14px;
+      color: #0f172a;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+    .proposal-header-block .ph-label {
+      font-weight: 700;
+      min-width: 140px;
+      color: #7c3aed;
+    }
+    .proposal-header-block .ph-value {
+      color: #0f172a;
+    }
+
+    /* ── Quote Table ── */
+    .quote-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .quote-table th {
+      background: #7c3aed;
+      color: #fff;
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .quote-table th:last-child {
+      text-align: right;
+    }
+    .quote-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #e2e8f0;
+      color: #0f172a;
+      vertical-align: top;
+    }
+    .quote-table td:last-child {
+      text-align: right;
+      white-space: nowrap;
+      font-weight: 600;
+    }
+    .quote-table tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+    .quote-table tr.total-row td {
+      background: #f5f3ff;
+      font-weight: 800;
+      font-size: 15px;
+      border-top: 2px solid #7c3aed;
+      border-bottom: 2px solid #7c3aed;
+      color: #5b21b6;
+    }
+    .quote-table .item-label {
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+    .quote-table .item-detail {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 400;
+    }
+    .affiliate-note {
+      background: rgba(124,58,237,0.08);
+      border: 1px solid #c4b5fd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-size: 13px;
+      color: #374151;
+      line-height: 1.6;
+      margin-top: 4px;
+    }
+    .affiliate-note strong {
+      color: #5b21b6;
+    }
+
+    /* ── Domain Fields ── */
+    .domain-field-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .domain-field-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #0f172a;
+      min-width: 100px;
+      white-space: nowrap;
+    }
+    .domain-field-line {
+      flex: 1;
+      min-width: 200px;
+      border: none;
+      border-bottom: 2px solid #7c3aed;
+      height: 32px;
+      background: transparent;
+    }
+
+    /* ── Signature Block ── */
+    .sig-block {
+      margin-top: 28px;
+    }
+    .sig-row {
+      display: flex;
+      gap: 40px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .sig-field {
+      flex: 1;
+      min-width: 220px;
+    }
+    .sig-field .sig-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #7c3aed;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .sig-field .sig-line {
+      border: none;
+      border-bottom: 2px solid #0f172a;
+      display: block;
+      width: 100%;
+      height: 36px;
+      margin-bottom: 4px;
+    }
+    .sig-field .sig-sublabel {
+      font-size: 12px;
+      color: #64748b;
+    }
+    .sig-contact-footer {
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 20px;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 16px;
+      text-align: center;
+    }
+    .sig-contact-footer a {
+      color: #7c3aed;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+      .quote-table { font-size: 13px; }
+      .quote-table th, .quote-table td { padding: 10px 10px; }
+      .sig-row { gap: 20px; }
+      .proposal-header-block .ph-label { min-width: 110px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════ PROPOSAL HEADER BLOCK ════ -->
+  <div class="proposal-header-block">
+    <div class="ph-row"><span class="ph-label">Prepared for:</span><span class="ph-value">Brent</span></div>
+    <div class="ph-row"><span class="ph-label">Prepared by:</span><span class="ph-value">GetBotPacks.com</span></div>
+    <div class="ph-row"><span class="ph-label">Date:</span><span class="ph-value">July 3, 2026</span></div>
+    <div class="ph-row"><span class="ph-label">Document:</span><span class="ph-value">Smart Site Proposal — Site Map, Visitor Flow &amp; Project Quote</span></div>
+  </div>
+
+  <!-- ════ HEADER ════ -->
+  <header class="doc-header">
+    <div class="prepared-by">Prepared by GetBotPacks.com</div>
+    <h1>Brent's Smart Site — Site Map &amp; Visitor Flow</h1>
+    <div class="subtitle">A visual overview of the site structure and how visitors and Brent interact with it. <strong>Draft for review — not a final design document.</strong></div>
+  </header>
+
+
+  <!-- ════ SECTION 1 — SITEMAP ════ -->
+  <div class="section-block">
+    <div class="section-label">Section 1</div>
+    <div class="section-title">Site Structure</div>
+    <div class="section-desc">Every page and section that makes up the Smart Site. The entire experience lives on one scrollable home page — no separate pages for visitors to navigate.</div>
+
+    <!-- Root -->
+    <div class="sitemap-root">
+      <div class="site-root-card">
+        BRENT'S SMART SITE
+        <div class="domain">brent.getbotpacks.com</div>
+      </div>
+    </div>
+
+    <!-- ↓ connector -->
+    <div class="connector-v"></div>
+
+    <!-- Home -->
+    <div class="home-card">
+      <div class="card-home">
+        HOME PAGE
+        <div class="card-sub">Single scrolling page · No sub-pages for visitors</div>
+      </div>
+    </div>
+
+    <!-- ↓ connector -->
+    <div class="connector-v"></div>
+
+    <!-- Sections banner -->
+    <div style="display:flex;justify-content:center;">
+      <div class="sections-banner">
+        SECTIONS ON THE HOME PAGE
+        <div class="banner-sub">All content lives here — visitors scroll, not navigate</div>
+      </div>
+    </div>
+
+    <!-- ↓ connector -->
+    <div class="connector-v"></div>
+
+    <!-- Five section cards -->
+    <div class="page-cards-row">
+      <div class="page-card">
+        <div class="card-title">Hero</div>
+        <div class="card-items">Clear headline<br>Purpose statement<br>Call-to-action</div>
+      </div>
+      <div class="page-card">
+        <div class="card-title">How It Works</div>
+        <div class="card-items">3-step guide<br>Orients new visitors<br>Topic chips</div>
+      </div>
+      <div class="page-card" style="border-color:#5b21b6;background:#faf5ff;">
+        <div class="card-title" style="color:#5b21b6;">AI Chat Box</div>
+        <div class="card-items">Consultation engine<br>Reasons across KB<br>Email gate · Affiliate CTAs</div>
+      </div>
+      <div class="page-card">
+        <div class="card-title">FAQ</div>
+        <div class="card-items">Top questions<br>Written by Brent<br>Updated via Pal</div>
+      </div>
+      <div class="page-card">
+        <div class="card-title">Blog</div>
+        <div class="card-items">Weekly posts<br>Written by Pal<br>Approved by Brent</div>
+      </div>
+    </div>
+
+    <!-- AI Chat sub-nodes -->
+    <div style="display:flex;justify-content:center;margin-top:16px;">
+      <div class="ai-col">
+        <div class="connector-v" style="background:#5b21b6;"></div>
+        <div class="ai-sub-card">
+          <div class="sub-title">Email Gate</div>
+          <div class="sub-desc">Unlocks full consultation depth<br>Builds Brent's email list</div>
+        </div>
+        <div class="connector-v" style="background:#5b21b6;"></div>
+        <div class="ai-sub-card">
+          <div class="sub-title">Affiliate CTAs</div>
+          <div class="sub-desc">Embedded inside AI answers<br>→ Vendor links · Commission earned</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <hr class="divider">
+
+
+  <!-- ════ SECTION 2 — VISITOR FLOW ════ -->
+  <div class="section-block">
+    <div class="section-label">Section 2</div>
+    <div class="section-title">Visitor Flow</div>
+    <div class="section-desc">How a new visitor moves through the site — from first landing to buying from Brent's recommended vendor.</div>
+
+    <div class="flow-steps">
+
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Land on the Site</h3>
+          <div class="step-context">Visitor arrives at <strong>brent.getbotpacks.com</strong></div>
+          <p style="font-size:13px;color:#475569;">They see a clear headline explaining what the site does, and a "How It Works" 3-step orientation — so they instantly understand this isn't a generic blog. It's a personalized consultation engine built on Brent's expertise.</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Orient &amp; Pick a Topic</h3>
+          <div class="step-context">Visitor reads the 3-step guide <em>or</em> taps a topic chip</div>
+          <p style="font-size:13px;color:#475569;">Topic chips — Recovery · Stacking · Hormones · Nutrition — pre-fill the chat box with a starter question. Zero friction to get started.</p>
+          <div class="step-example">Visitor taps "Recovery" → chat box fills: "What peptides support faster recovery after training?"</div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Type Their Situation</h3>
+          <div class="step-context">Visitor uses the single chat box to describe their actual situation</div>
+          <p style="font-size:13px;color:#475569;">Not a form. Not a quiz. Just a conversational input — the way they'd text a friend who happened to be a peptide expert.</p>
+          <div class="step-example">"I'm on metformin, doing intermittent fasting, and want to improve recovery after lifting. What's safe to stack?"</div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>AI Connects the Dots</h3>
+          <div class="step-context">The AI reasons across Brent's full research library</div>
+          <p style="font-size:13px;color:#475569;">It doesn't just search for keywords — it reasons: "metformin + IF affects mTOR... BPC-157 timing matters here... this stack has a conflict at this dose." It surfaces connections a visitor couldn't make themselves.</p>
+          <div class="step-highlight">⚡ This is what makes it worth coming back to</div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Email Gate</h3>
+          <div class="step-context">First-time visitors without email on file</div>
+          <p style="font-size:13px;color:#475569;">Anonymous visitors get a directional answer — enough to see the value — then a prompt to enter their email for the full consultation depth. Email on file = full access, always.</p>
+          <div class="step-example">🔒 "You're on the right track — enter your email to unlock Brent's full protocol recommendation."</div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h3>Recommendation + Affiliate CTA</h3>
+          <div class="step-context">Inside the AI answer — not a sidebar, not a banner</div>
+          <p style="font-size:13px;color:#475569;">The answer includes Brent's specific vendor recommendation, woven naturally into the response. One yellow button to take action.</p>
+          <div class="step-example">"Brent recommends BPC-157 from [Vendor Name] — third-party tested, the source he uses personally."</div>
+          <div class="cta-pill">Get Brent's Recommended BPC-157 →</div>
+          <p style="font-size:12px;color:#94a3b8;margin-top:8px;">Visitor clicks → goes to vendor → Brent earns commission</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-num">7</div>
+        <div class="step-body">
+          <h3>Keep Exploring</h3>
+          <div class="step-context">Visitor stays engaged — and comes back</div>
+          <p style="font-size:13px;color:#475569;">Visitor scrolls to the FAQ for quick common questions. Reads this week's blog post. Bookmarks the site. Returns next week when Brent publishes new research. The site gets more valuable over time — for visitors and for Brent.</p>
+          <div class="step-highlight">📬 New blog post = reason to return = more affiliate clicks</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <hr class="divider">
+
+
+  <!-- ════ SECTION 3 — OWNER FLOW ════ -->
+  <div class="section-block">
+    <div class="section-label">Section 3</div>
+    <div class="section-title">How Brent Maintains It</div>
+    <div class="section-desc">Everything Brent needs to do to keep the site fresh and growing. No tech skills required — all of it happens through Pal chat.</div>
+
+    <div class="owner-grid">
+
+      <div class="owner-card">
+        <div class="oc-num">Step 1</div>
+        <h3>Add Research</h3>
+        <p>Brent finds a new study, article, or protocol. He pastes it or uploads it to his Pal chat. Done. The AI starts reasoning with it immediately.</p>
+        <div class="pal-cmd">"Pal, add this to my knowledge base"<br>→ Knowledge base updated ✓</div>
+      </div>
+
+      <div class="owner-card">
+        <div class="oc-num">Step 2</div>
+        <h3>Update FAQ</h3>
+        <p>Brent gets a question he wants to answer publicly. He tells Pal. Pal writes the answer in his voice and adds it to the FAQ section — live in minutes.</p>
+        <div class="pal-cmd">"Pal, add this to FAQ: What's the difference between BPC-157 and TB-500?"<br>→ FAQ updated ✓</div>
+      </div>
+
+      <div class="owner-card">
+        <div class="oc-num">Step 3</div>
+        <h3>Publish Blog Post</h3>
+        <p>Brent gives Pal a topic or drops in a study. Pal writes the full post in Brent's voice. Brent reads it, approves, and it publishes automatically.</p>
+        <div class="pal-cmd">"Pal, write this week's post on peptide timing around fasted training"<br>→ Draft ready for approval ✓</div>
+      </div>
+
+      <div class="owner-card">
+        <div class="oc-num">Step 4</div>
+        <h3>AI Gets Smarter</h3>
+        <p>Every document Brent adds expands what the AI can reason across. No re-training. No tech work. The consultation engine improves automatically over time.</p>
+        <div class="pal-cmd">More documents → deeper answers<br>→ Better recommendations → more commissions ✓</div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <hr class="divider">
+
+  <!-- ════ SECTION 4 — PROJECT QUOTE ════ -->
+  <div class="section-block">
+    <div class="section-label">Project Investment</div>
+    <div class="section-title">Project Investment</div>
+    <div class="section-desc">Everything included in your Smart Site build, monthly maintenance, and optional affiliate program research.</div>
+
+    <table class="quote-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Details</th>
+          <th>Investment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="item-label">Smart Site Build</div></td>
+          <td><div class="item-detail">AI consultation engine, FAQ page, blog page, domain setup, Cloudflare DNS, Railway hosting, mobile-responsive template, SEO + AEO</div></td>
+          <td>$2,000</td>
+        </tr>
+        <tr>
+          <td><div class="item-label">Monthly Maintenance</div></td>
+          <td><div class="item-detail">Hosting, Pal CMS access, client-requested updates included</div></td>
+          <td>$99/mo</td>
+        </tr>
+        <tr>
+          <td><div class="item-label">Affiliate Program Research</div></td>
+          <td><div class="item-detail">Up to 3 vendors researched and outreach attempted. $50 per attempt — charged regardless of vendor response. Wired in if approved.</div></td>
+          <td>$50–$150</td>
+        </tr>
+        <tr class="total-row">
+          <td>Total to Start</td>
+          <td>Build + first month</td>
+          <td>$2,099</td>
+        </tr>
+        <tr class="total-row">
+          <td>Ongoing</td>
+          <td>Monthly after first month</td>
+          <td>$99/mo</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="affiliate-note">
+      <strong>Note on Affiliate Links:</strong> We research and contact affiliate programs on your behalf. The $50 fee covers research and outreach. We cannot guarantee vendor response or approval — but if they approve, we wire the link directly into your AI's answers so visitors can purchase through your recommendation.
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ════ SECTION 5 — DOMAIN NAME REQUEST ════ -->
+  <div class="section-block">
+    <div class="section-label">Your Domain Name</div>
+    <div class="section-title">Your Domain Name</div>
+    <div class="section-desc">Your Smart Site will live at your own domain (e.g. brentperformance.com). If you already own a domain, we'll connect it. If not, please provide 3 preferences below — we'll check availability and register your first choice (domain registration cost ~$12–15/yr, billed separately).</div>
+
+    <div class="domain-field-row">
+      <span class="domain-field-label">1st choice:</span>
+      <div class="domain-field-line"></div>
+    </div>
+    <div class="domain-field-row">
+      <span class="domain-field-label">2nd choice:</span>
+      <div class="domain-field-line"></div>
+    </div>
+    <div class="domain-field-row">
+      <span class="domain-field-label">3rd choice:</span>
+      <div class="domain-field-line"></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ════ SECTION 6 — SIGNATURE BLOCK ════ -->
+  <div class="section-block">
+    <div class="section-label">Authorization to Proceed</div>
+    <div class="section-title">Authorization to Proceed</div>
+    <div class="section-desc">By signing below, you authorize GetBotPacks.com to begin work on your Smart Site as described in this proposal. Work begins upon receipt of the $2,000 build payment. Monthly billing of $99 begins 30 days after site launch.</div>
+
+    <div class="sig-block">
+      <div class="sig-row">
+        <div class="sig-field">
+          <div class="sig-label">Client Signature</div>
+          <span class="sig-line"></span>
+        </div>
+        <div class="sig-field" style="max-width:180px;">
+          <div class="sig-label">Date</div>
+          <span class="sig-line"></span>
+        </div>
+      </div>
+      <div class="sig-row">
+        <div class="sig-field">
+          <div class="sig-label">Printed Name</div>
+          <span class="sig-line"></span>
+        </div>
+      </div>
+      <div class="sig-row">
+        <div class="sig-field">
+          <div class="sig-label">GetBotPacks Authorization</div>
+          <span class="sig-line"></span>
+          <div class="sig-sublabel">Patrick Smith, GetBotPacks.com</div>
+        </div>
+        <div class="sig-field" style="max-width:180px;">
+          <div class="sig-label">Date</div>
+          <span class="sig-line"></span>
+        </div>
+      </div>
+
+      <div class="sig-contact-footer">
+        Questions before signing? Contact us at <a href="https://getbotpacks.com" target="_blank">getbotpacks.com</a> &nbsp;|&nbsp; <a href="mailto:getbotpacks@gmail.com">getbotpacks@gmail.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ FOOTER ════ -->
+  <footer class="doc-footer">
+    Questions? Contact us at <a href="https://getbotpacks.com" target="_blank">getbotpacks.com</a>
+    &nbsp;·&nbsp; Document prepared for Brent — confidential draft
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+User-agent: *
+Allow: /
+Allow: /llms.txt
+Allow: /agents
+Allow: /sitemap.xml
+
+# AI crawlers — explicitly welcome
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+# Sitemap
+Sitemap: https://getbotpacks.com/sitemap.xml
+
+# LLM discovery
+LLMs: https://getbotpacks.com/llms.txt

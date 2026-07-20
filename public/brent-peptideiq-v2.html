@@ -64,9 +64,9 @@
       --footer-border:#e2e8f0;
       --input-bg:     #ffffff;
       --input-border: #cbd5e1;
-      --mol-color:    rgba(15,23,42,0.02);
-      --mol-node:     rgba(15,23,42,0.04);
-      --mol-bond:     rgba(15,23,42,0.03);
+      --mol-color:    rgba(15,23,42,0.04);
+      --mol-node:     rgba(15,23,42,0.10);
+      --mol-bond:     rgba(15,23,42,0.06);
       --hero-glow:    rgba(124,58,237,0.08);
       --badge-bg:     rgba(124,58,237,0.08);
       --badge-border: rgba(124,58,237,0.25);
@@ -112,9 +112,9 @@
       top: 0; left: 0; right: 0;
       z-index: 200;
       display: flex;
-      justify-content: center;
+      justify-content: flex-end;
       align-items: center;
-      padding: 0 12px;
+      padding: 0 24px;
       height: 44px;
       background: rgba(15,23,42,0.95);
       border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -548,6 +548,8 @@
     /* ─── HIDE NAV LINKS ON SMALL ─── */
     @media (max-width: 700px) {
       .nav-links { display: none; }
+      nav { padding: 0 16px; }
+      .nav-cta { padding: 8px 14px; font-size: 0.8rem; white-space: nowrap; flex-shrink: 0; max-width: calc(100vw - 160px); overflow: hidden; text-overflow: ellipsis; }
     }
 
     /* ─── RESPONSIVE ─── */
@@ -561,7 +563,6 @@
       .explainer { padding: 24px 20px; }
       .qa-wrap { padding: 26px 20px; }
       .theme-toggle-bar .toggle-label { display: none; }
-      .theme-btn { padding: 5px 18px; font-size: 0.82rem; }
     }
   </style>
 </head>

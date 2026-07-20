@@ -1,0 +1,281 @@
+<!-- Pal FAQ: How Pal Fits Into What You Already Use -->
+<!-- Insert into GBP main page where needed -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<style>
+  .pal-faq-section {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8f9ff;
+    padding: 72px 24px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .pal-faq-inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .pal-faq-label {
+    display: inline-block;
+    background: #ede9fe;
+    color: #6d28d9;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+
+  .pal-faq-heading {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    margin: 0 0 12px 0;
+  }
+
+  .pal-faq-subhead {
+    font-size: 1.05rem;
+    color: #475569;
+    line-height: 1.6;
+    margin: 0 0 48px 0;
+    max-width: 580px;
+  }
+
+  .pal-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+
+  .pal-faq-item {
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .pal-faq-item:last-child {
+    border-bottom: none;
+  }
+
+  .pal-faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 22px 24px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    transition: background 0.15s ease;
+  }
+
+  .pal-faq-question:hover {
+    background: #faf5ff;
+  }
+
+  .pal-faq-item.open .pal-faq-question {
+    background: #faf5ff;
+  }
+
+  .pal-faq-question-text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.4;
+    flex: 1;
+  }
+
+  .pal-faq-item.open .pal-faq-question-text {
+    color: #6d28d9;
+  }
+
+  .pal-faq-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease, transform 0.2s ease;
+  }
+
+  .pal-faq-item.open .pal-faq-icon {
+    background: #6d28d9;
+    transform: rotate(45deg);
+  }
+
+  .pal-faq-icon svg {
+    width: 14px;
+    height: 14px;
+    stroke: #64748b;
+    transition: stroke 0.15s ease;
+  }
+
+  .pal-faq-item.open .pal-faq-icon svg {
+    stroke: #ffffff;
+  }
+
+  .pal-faq-answer {
+    display: none;
+    padding: 0 24px 24px 24px;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .pal-faq-item.open .pal-faq-answer {
+    display: block;
+  }
+
+  .pal-faq-answer p {
+    font-size: 0.97rem;
+    color: #334155;
+    line-height: 1.75;
+    margin: 16px 0 0 0;
+  }
+
+  .pal-faq-answer p:first-child {
+    margin-top: 20px;
+  }
+
+  .pal-faq-answer .pal-highlight {
+    display: inline-block;
+    background: #ede9fe;
+    color: #5b21b6;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+  }
+
+  .pal-faq-answer .pal-callout {
+    background: #f5f3ff;
+    border-left: 3px solid #6d28d9;
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+    margin-top: 16px;
+    font-size: 0.93rem;
+    color: #3730a3;
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 600px) {
+    .pal-faq-section {
+      padding: 52px 16px;
+    }
+    .pal-faq-question {
+      padding: 18px 16px;
+    }
+    .pal-faq-answer {
+      padding: 0 16px 20px 16px;
+    }
+  }
+</style>
+
+<section class="pal-faq-section" id="pal-faq-compare" aria-label="Pal FAQ — How it fits with your other tools">
+  <div class="pal-faq-inner">
+
+    <span class="pal-faq-label">Common Questions</span>
+    <h2 class="pal-faq-heading">How Pal Fits Into What You Already Use</h2>
+    <p class="pal-faq-subhead">You probably already use ChatGPT, Notion, or Perplexity. Here's where Pal adds something different — not better at everything, just built for a different job.</p>
+
+    <div class="pal-faq-list" role="list">
+
+      <!-- FAQ 1 -->
+      <div class="pal-faq-item" role="listitem">
+        <button class="pal-faq-question" aria-expanded="false" onclick="palFaqToggle(this)">
+          <span class="pal-faq-question-text">I already use ChatGPT — what does Pal add?</span>
+          <span class="pal-faq-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </button>
+        <div class="pal-faq-answer" aria-hidden="true">
+          <p>ChatGPT is a conversation. <span class="pal-highlight">Pal is a workspace that remembers.</span> Every time you open ChatGPT, you start from scratch — it has no idea who you are, what you're working on, or what you talked about last week. That's fine for quick one-off questions. It's limiting when you're trying to do ongoing work.</p>
+          <p>Pal builds context over time. Your preferences, your active projects, your goals — Pal carries those forward between sessions so you're not re-explaining yourself every time you open it. The longer you use it, the more useful it gets.</p>
+          <p>Think of it this way: ChatGPT is a very smart stranger you meet every single day. Pal is an assistant who's been with you for months.</p>
+          <div class="pal-callout">"I used ChatGPT for a year and every session felt like meeting it for the first time. Pal actually knows my business now."</div>
+        </div>
+      </div>
+
+      <!-- FAQ 2 -->
+      <div class="pal-faq-item" role="listitem">
+        <button class="pal-faq-question" aria-expanded="false" onclick="palFaqToggle(this)">
+          <span class="pal-faq-question-text">I use Notion for notes and projects — why would I need Pal?</span>
+          <span class="pal-faq-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </button>
+        <div class="pal-faq-answer" aria-hidden="true">
+          <p>Notion stores what you write. <span class="pal-highlight">Pal thinks with you.</span> Notion is an excellent doc tool — it organizes, structures, and surfaces your notes. But it doesn't draft, research, summarize, or act. It holds the output; it doesn't help you create it.</p>
+          <p>Pal is the assistant that helps you figure out what to write, draft it, research the background, and then — if you want — hand it to Notion for storage. They're genuinely complementary. A lot of Pal users use Pal to do the thinking and Notion to do the filing.</p>
+          <p>The question isn't really "Pal or Notion." It's "what would I accomplish if I had an assistant helping me fill that Notion database instead of staring at a blank page?"</p>
+        </div>
+      </div>
+
+      <!-- FAQ 3 -->
+      <div class="pal-faq-item" role="listitem">
+        <button class="pal-faq-question" aria-expanded="false" onclick="palFaqToggle(this)">
+          <span class="pal-faq-question-text">I use Perplexity for research — how is Pal different?</span>
+          <span class="pal-faq-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </button>
+        <div class="pal-faq-answer" aria-hidden="true">
+          <p>Perplexity is great at answering a single question with citations. Where it stops is where Pal starts. <span class="pal-highlight">Pal remembers what you searched last week</span> and connects it to what you're researching today — building a picture over time rather than treating every search as independent.</p>
+          <p>Pal also has web search built in, so you're not giving anything up on the research side. On top of that, Pal adds memory, tools (email, calendar, reminders), and your personal context — so research doesn't just answer a question, it feeds into your actual work.</p>
+          <p>Think of it as Perplexity plus memory plus action layer. One-off research lives in Perplexity. Ongoing projects live in Pal.</p>
+        </div>
+      </div>
+
+      <!-- FAQ 4 -->
+      <div class="pal-faq-item" role="listitem">
+        <button class="pal-faq-question" aria-expanded="false" onclick="palFaqToggle(this)">
+          <span class="pal-faq-question-text">What can Pal do that the others can't?</span>
+          <span class="pal-faq-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </button>
+        <div class="pal-faq-answer" aria-hidden="true">
+          <p>Before answering that — think about the task you keep wishing your AI could handle <em>without</em> you re-explaining everything from scratch every single time. The project you've described in three different chats and still had to re-introduce. The context that disappears overnight.</p>
+          <p><span class="pal-highlight">That's what Pal is built for.</span> No other single tool combines memory + real-time research + action tools (email, calendar, reminders) + your personal context in one place. You can get pieces of it from four different apps — or you can have one assistant that actually knows you.</p>
+          <p>The differentiator isn't any single feature. It's that Pal accumulates. Every conversation makes the next one more useful. That compounds in a way that none of the point tools do.</p>
+          <div class="pal-callout">The combination of memory + research + tools + your context — no other single tool does all four.</div>
+        </div>
+      </div>
+
+    </div><!-- /.pal-faq-list -->
+
+  </div><!-- /.pal-faq-inner -->
+</section>
+
+<script>
+  function palFaqToggle(btn) {
+    var item = btn.closest('.pal-faq-item');
+    var isOpen = item.classList.contains('open');
+
+    // Close all
+    document.querySelectorAll('.pal-faq-item.open').forEach(function(openItem) {
+      openItem.classList.remove('open');
+      openItem.querySelector('.pal-faq-question').setAttribute('aria-expanded', 'false');
+      openItem.querySelector('.pal-faq-answer').setAttribute('aria-hidden', 'true');
+    });
+
+    // Open clicked if it was closed
+    if (!isOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      item.querySelector('.pal-faq-answer').setAttribute('aria-hidden', 'false');
+    }
+  }
+</script>

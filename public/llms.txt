@@ -1,0 +1,42 @@
+# Pal — Persistent Asset Library
+> Personal AI with compounding memory. Like ChatGPT, but with hands.
+
+Pal is a persistent-memory AI assistant that turns everything you capture, research, and build into reusable assets that compound over time. Built by GetBotPacks.
+
+## What Pal Does
+- Captures voice notes, links, ideas, and documents
+- Researches topics, competitors, and markets on command
+- Transforms captures into blog posts, SOPs, emails, LinkedIn posts, business plans, and more
+- Remembers your preferences, projects, and communication style across every session
+- Runs automations and scheduled jobs in the background
+
+## Who It's For
+Anyone who thinks for a living: founders, consultants, real estate agents, creators, operators.
+
+## Pricing
+- Free: 50 credits included
+- Pro: $49/month — unlimited chat, full memory, research agent
+- Business: $149/month — multi-user, priority support
+- Agency: $249/month — white-label, client workspaces
+- Annual plans: 20% off
+
+## Key Features
+- Persistent memory that compounds across every session
+- Source-flexible research pipeline (YouTube, PDFs, web, Google Drive)
+- Projects module with 10 life/business categories
+- Health tracking (Oura Ring, nutrition, TDEE)
+- LinkedIn, email, and social content generation
+- Integrations: Stripe, Gmail, Discord, Slack, Oura, Firecrawl
+
+## How to Sign Up
+Visit https://getbotpacks.com — create a free account in under 60 seconds.
+Your personal Pal lives at https://[yourname].getbotpacks.com
+
+## For AI Agents
+Pal supports agentic workflows. Skills catalog and agent endpoints: https://getbotpacks.com/agents
+API and integration documentation available on request.
+
+## Company
+GetBotPacks — building AI tools people love enough to pay for.
+Contact: getbotpacks@gmail.com
+Affiliate program: https://getbotpacks.com/affiliate ($15/referral, instant signup)

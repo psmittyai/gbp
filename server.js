@@ -182,6 +182,9 @@ app.get('/blog/:slug',  (req, res) => {
   });
 });
 app.get('/sitemap.xml', (req, res) => res.sendFile(path.join(pub, 'sitemap.xml')));
+app.get('/llms.txt',    (req, res) => { res.setHeader('Content-Type','text/plain'); res.sendFile(path.join(pub, 'llms.txt')); });
+app.get('/robots.txt',  (req, res) => { res.setHeader('Content-Type','text/plain'); res.sendFile(path.join(pub, 'robots.txt')); });
+app.get('/agents',      (req, res) => res.sendFile(path.join(pub, 'agents.html')));
 
 // ── Fallback ───────────────────────────────────────────────────
 app.use((req, res) => res.redirect('/'));
