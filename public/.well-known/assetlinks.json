@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.getbotpacks.pal",
+    "sha256_cert_fingerprints": ["5F:E5:CD:09:58:2B:04:D7:29:72:36:8B:DC:EB:60:1D:8E:2C:BE:D6:94:BC:AB:9D:06:3A:68:58:FD:31:0C:E7"]
+  }
+}]
