@@ -1,19 +1,24 @@
 {
-  "name": "Pal — Your Personal AI",
+  "name": "Pal \u2014 Your Personal AI",
   "short_name": "Pal",
   "description": "Your personal AI assistant with persistent memory. Like ChatGPT, but with hands.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui"],
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
   "orientation": "portrait-primary",
   "background_color": "#ffffff",
   "theme_color": "#7c3aed",
   "lang": "en",
   "dir": "ltr",
-  "categories": ["productivity", "utilities"],
+  "categories": [
+    "productivity",
+    "utilities"
+  ],
   "id": "/",
-  "iarc_rating_id": "",
   "prefer_related_applications": false,
   "icons": [
     {
@@ -29,11 +34,39 @@
       "purpose": "any maskable"
     }
   ],
-  "screenshots": [],
-  "related_applications": [
+  "share_target": {
+    "action": "https://pjsmith.getbotpacks.com/share",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "shortcuts": [
     {
-      "platform": "play",
-      "id": "com.getbotpacks.pal"
+      "name": "New Chat",
+      "short_name": "Chat",
+      "description": "Start a new conversation",
+      "url": "https://pjsmith.getbotpacks.com/?start=capture",
+      "icons": [
+        {
+          "src": "/assets/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "My Library",
+      "short_name": "Library",
+      "description": "Open your content library",
+      "url": "https://pjsmith.getbotpacks.com/?start=library",
+      "icons": [
+        {
+          "src": "/assets/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }
