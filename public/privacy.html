@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — PAL by GetBotPacks</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0f0f0f;
+      color: #e2e8f0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      background: #0f0f0f;
+      border-bottom: 1px solid rgba(124,58,237,0.25);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav a.logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #fff;
+    }
+    nav a.logo img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+    nav a.back {
+      margin-left: auto;
+      color: #a78bfa;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    nav a.back:hover { text-decoration: underline; }
+
+    /* LAYOUT */
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* HEADER */
+    .page-header {
+      margin-bottom: 48px;
+      text-align: center;
+    }
+    .page-header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .page-header .subtitle {
+      color: #94a3b8;
+      font-size: 0.95rem;
+    }
+    .page-header .effective {
+      display: inline-block;
+      margin-top: 12px;
+      background: rgba(124,58,237,0.15);
+      border: 1px solid rgba(124,58,237,0.35);
+      color: #a78bfa;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 20px;
+    }
+
+    /* TOC */
+    .toc {
+      background: #1a1a2e;
+      border: 1px solid rgba(124,58,237,0.2);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 48px;
+    }
+    .toc h3 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #7c3aed;
+      margin-bottom: 12px;
+    }
+    .toc ol {
+      padding-left: 20px;
+    }
+    .toc li {
+      margin-bottom: 4px;
+    }
+    .toc a {
+      color: #a78bfa;
+      text-decoration: none;
+      font-size: 0.92rem;
+    }
+    .toc a:hover { text-decoration: underline; }
+
+    /* SECTIONS */
+    section {
+      margin-bottom: 48px;
+      scroll-margin-top: 80px;
+    }
+    section h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(124,58,237,0.25);
+    }
+    section h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #c4b5fd;
+      margin: 24px 0 10px;
+    }
+    p { margin-bottom: 14px; color: #e2e8f0; }
+    ul, ol {
+      padding-left: 22px;
+      margin-bottom: 14px;
+    }
+    li { margin-bottom: 6px; color: #e2e8f0; }
+
+    /* HIGHLIGHT BOX */
+    .highlight-box {
+      background: rgba(124,58,237,0.1);
+      border: 1px solid rgba(124,58,237,0.3);
+      border-left: 4px solid #7c3aed;
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin: 20px 0;
+    }
+    .highlight-box p { margin: 0; }
+    .highlight-box strong { color: #a78bfa; }
+
+    /* EXTENSION BADGE */
+    .extension-section {
+      background: #130d1f;
+      border: 1px solid rgba(124,58,237,0.35);
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 48px;
+    }
+    .extension-section .ext-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(124,58,237,0.2);
+      border: 1px solid rgba(124,58,237,0.4);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #a78bfa;
+      margin-bottom: 16px;
+    }
+    .extension-section h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(124,58,237,0.25);
+    }
+
+    /* DATA TABLE */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.92rem;
+    }
+    .data-table th {
+      background: rgba(124,58,237,0.15);
+      color: #c4b5fd;
+      font-weight: 700;
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid rgba(124,58,237,0.25);
+    }
+    .data-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: #e2e8f0;
+      vertical-align: top;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .tag-yes { color: #4ade80; font-weight: 600; }
+    .tag-no { color: #f87171; font-weight: 600; }
+    .tag-user { color: #60a5fa; font-weight: 600; }
+
+    /* FOOTER */
+    .policy-footer {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 32px;
+      text-align: center;
+      color: #64748b;
+      font-size: 0.85rem;
+    }
+    .policy-footer a { color: #a78bfa; text-decoration: none; }
+    .policy-footer a:hover { text-decoration: underline; }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .page-header h1 { font-size: 1.5rem; }
+      .data-table { font-size: 0.82rem; }
+      .data-table th, .data-table td { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="https://getbotpacks.com">
+    <img src="/assets/pal-brain.png" alt="PAL Logo">
+    PAL — GetBotPacks
+  </a>
+  <a class="back" href="https://getbotpacks.com">← Back to Home</a>
+</nav>
+
+<div class="container">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <h1>Privacy Policy</h1>
+    <p class="subtitle">PAL (Persistent Asset Library) by GetBotPacks</p>
+    <span class="effective">Effective: July 15, 2026</span>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <h3>Contents</h3>
+    <ol>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#what-we-collect">What Data We Collect</a></li>
+      <li><a href="#how-we-use">How We Use Your Data</a></li>
+      <li><a href="#ai-processing">AI Processing (Claude / Anthropic)</a></li>
+      <li><a href="#sharing">Data Sharing</a></li>
+      <li><a href="#storage">Data Storage &amp; Retention</a></li>
+      <li><a href="#your-rights">Your Rights &amp; Controls</a></li>
+      <li><a href="#extension">Chrome Extension — Specific Disclosures</a></li>
+      <li><a href="#cookies">Cookies &amp; Local Storage</a></li>
+      <li><a href="#children">Children's Privacy</a></li>
+      <li><a href="#changes">Changes to This Policy</a></li>
+      <li><a href="#contact">Contact Us</a></li>
+    </ol>
+  </div>
+
+  <!-- SECTION 1: OVERVIEW -->
+  <section id="overview">
+    <h2>1. Overview</h2>
+    <p>
+      PAL (Persistent Asset Library) is a product of <strong>GetBotPacks</strong>, operated at
+      <a href="https://getbotpacks.com" style="color:#a78bfa;">getbotpacks.com</a>.
+      PAL is a personal AI assistant and knowledge library that helps you capture, organize,
+      summarize, and query information from the web and your own content.
+    </p>
+    <p>
+      This Privacy Policy covers:
+    </p>
+    <ul>
+      <li>The <strong>PAL web application</strong> at <code>[slug].getbotpacks.com</code></li>
+      <li>The <strong>PAL Chrome Extension</strong> available on the Chrome Web Store</li>
+    </ul>
+    <p>
+      We take your privacy seriously. PAL is built on a simple principle: <strong>your data is yours</strong>.
+      We collect only what is necessary, transmit only what you explicitly request, and never sell
+      your data to anyone.
+    </p>
+
+    <div class="highlight-box">
+      <p>
+        <strong>The short version:</strong> PAL only reads or transmits webpage content when <em>you</em> press
+        a button to take an action. There is no background recording, no passive browsing history collection,
+        and no advertising. You control what gets saved.
+      </p>
+    </div>
+  </section>
+
+  <!-- SECTION 2: WHAT WE COLLECT -->
+  <section id="what-we-collect">
+    <h2>2. What Data We Collect</h2>
+
+    <h3>2a. Account Data</h3>
+    <p>When you create a PAL account, we collect:</p>
+    <ul>
+      <li>Your chosen <strong>account slug</strong> (your personal subdomain, e.g. <code>yourname.getbotpacks.com</code>)</li>
+      <li>Your <strong>password</strong> (stored as a salted hash — never in plain text)</li>
+      <li>Optional: email address (only if you provide it for account recovery)</li>
+    </ul>
+
+    <h3>2b. Content You Save (Assets)</h3>
+    <p>
+      PAL stores the content you explicitly choose to save. This may include:
+    </p>
+    <ul>
+      <li>Page URLs and titles from websites you visit</li>
+      <li>Selected text snippets you highlight and save</li>
+      <li>Full page content (if you choose the "full page" capture mode)</li>
+      <li>Your own notes, project entries, and research items</li>
+      <li>AI-generated summaries and responses to your questions</li>
+    </ul>
+    <p>
+      <strong>This content is stored only when you take an explicit action</strong> — clicking Save,
+      Summarize, Ask PAL, or Create Asset. PAL does not passively record your browsing.
+    </p>
+
+    <h3>2c. Usage Data</h3>
+    <p>
+      Like most web services, our servers may log standard technical information when you access PAL:
+    </p>
+    <ul>
+      <li>IP address (for security and fraud prevention)</li>
+      <li>Browser type and version</li>
+      <li>Timestamps of requests</li>
+      <li>Error logs</li>
+    </ul>
+    <p>This data is used for security, debugging, and service operation — not for advertising or user profiling.</p>
+
+    <h3>2d. What We Do NOT Collect</h3>
+    <ul>
+      <li>❌ Browsing history (we do not record which sites you visit)</li>
+      <li>❌ Keystrokes or form inputs on third-party websites</li>
+      <li>❌ Location data</li>
+      <li>❌ Camera or microphone access</li>
+      <li>❌ Personal financial information</li>
+      <li>❌ Health or biometric data</li>
+    </ul>
+  </section>
+
+  <!-- SECTION 3: HOW WE USE -->
+  <section id="how-we-use">
+    <h2>3. How We Use Your Data</h2>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Purpose</th>
+          <th>Legal Basis</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Account slug &amp; password</td>
+          <td>Authenticate you and serve your personal PAL board</td>
+          <td>Contract performance</td>
+        </tr>
+        <tr>
+          <td>Saved assets (URLs, text, notes)</td>
+          <td>Display your library, enable search, power AI queries</td>
+          <td>Contract performance / your consent</td>
+        </tr>
+        <tr>
+          <td>Page content submitted via extension</td>
+          <td>Process your chosen action (save, summarize, answer question)</td>
+          <td>Your explicit consent at time of action</td>
+        </tr>
+        <tr>
+          <td>Server logs / IP</td>
+          <td>Security, debugging, abuse prevention</td>
+          <td>Legitimate interests</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>We do not use your data for advertising, profiling, or any purpose beyond operating PAL for you.</p>
+  </section>
+
+  <!-- SECTION 4: AI PROCESSING -->
+  <section id="ai-processing">
+    <h2>4. AI Processing (Claude / Anthropic)</h2>
+
+    <p>
+      PAL uses <strong>Claude</strong>, the AI model developed by <strong>Anthropic, PBC</strong>,
+      to power its AI features — including summaries, "Ask PAL" queries, and content analysis.
+    </p>
+
+    <div class="highlight-box">
+      <p>
+        <strong>When you trigger an AI action</strong> (e.g. "Summarize this page" or "Ask PAL a question"),
+        the relevant content (page text or your selected text) is sent to Anthropic's API for processing.
+        Anthropic returns the AI-generated response, which PAL then displays and optionally stores in your library.
+      </p>
+    </div>
+
+    <p>Key facts about AI data handling:</p>
+    <ul>
+      <li>Content is sent to Anthropic <strong>only when you trigger an AI action</strong> — never passively</li>
+      <li>Anthropic processes content under its own <a href="https://www.anthropic.com/privacy" style="color:#a78bfa;" target="_blank" rel="noopener">Privacy Policy</a></li>
+      <li>PAL operates under Anthropic's API usage policy, which prohibits training on API-submitted content by default</li>
+      <li>We do not knowingly send sensitive personal information (passwords, financial data) through AI actions</li>
+    </ul>
+
+    <p>
+      By using PAL's AI features, you acknowledge that content you submit for processing is shared
+      with Anthropic for the purpose of generating an AI response.
+    </p>
+  </section>
+
+  <!-- SECTION 5: DATA SHARING -->
+  <section id="sharing">
+    <h2>5. Data Sharing</h2>
+
+    <p>PAL does not sell your data. Period.</p>
+    <p>We share data only in these limited circumstances:</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Recipient</th>
+          <th>What Is Shared</th>
+          <th>Why</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Anthropic (Claude API)</strong></td>
+          <td>Page content / text you submit for AI actions</td>
+          <td>To generate AI summaries and answers</td>
+        </tr>
+        <tr>
+          <td><strong>Railway.app</strong></td>
+          <td>Encrypted hosting infrastructure</td>
+          <td>PAL servers run on Railway's platform</td>
+        </tr>
+        <tr>
+          <td><strong>Law enforcement</strong></td>
+          <td>Only if legally required</td>
+          <td>Legal compliance with valid court orders</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      We do not share your data with advertising networks, data brokers, analytics companies,
+      or any third party for marketing purposes.
+    </p>
+  </section>
+
+  <!-- SECTION 6: STORAGE & RETENTION -->
+  <section id="storage">
+    <h2>6. Data Storage &amp; Retention</h2>
+
+    <h3>Where Data Is Stored</h3>
+    <p>
+      Your PAL data is stored on PAL servers hosted via Railway.app infrastructure.
+      Data is associated with your account slug and protected by your password.
+    </p>
+
+    <h3>How Long We Retain Data</h3>
+    <ul>
+      <li><strong>Account data &amp; saved assets:</strong> Retained as long as your account is active</li>
+      <li><strong>Individual assets:</strong> Deleted immediately when you delete them from your library</li>
+      <li><strong>Full account deletion:</strong> All data permanently deleted when you delete your account</li>
+      <li><strong>Server logs:</strong> Retained for up to 90 days for security purposes, then purged</li>
+    </ul>
+
+    <h3>Security</h3>
+    <p>
+      We protect your data using industry-standard practices: HTTPS encryption in transit,
+      hashed password storage, and access controls. No security system is perfect — please
+      choose a strong, unique password for your PAL account.
+    </p>
+  </section>
+
+  <!-- SECTION 7: YOUR RIGHTS -->
+  <section id="your-rights">
+    <h2>7. Your Rights &amp; Controls</h2>
+
+    <p>You have full control over your data:</p>
+
+    <ul>
+      <li>
+        <strong>Access:</strong> Log into your PAL board at <code>[yourslug].getbotpacks.com</code>
+        to view all saved assets
+      </li>
+      <li>
+        <strong>Delete individual assets:</strong> Remove any saved item directly from your library
+      </li>
+      <li>
+        <strong>Delete your account:</strong> Contact <a href="mailto:support@getbotpacks.com" style="color:#a78bfa;">support@getbotpacks.com</a>
+        to permanently delete your account and all associated data
+      </li>
+      <li>
+        <strong>Revoke extension access:</strong> Uninstall the Chrome extension at any time —
+        removing the extension immediately stops all extension-based data collection. Your PAL
+        account and existing saved data remain until you delete them.
+      </li>
+      <li>
+        <strong>Data portability:</strong> Contact us to request an export of your saved assets
+      </li>
+    </ul>
+
+    <p>
+      If you are located in the European Economic Area, United Kingdom, or California, you may have
+      additional rights under GDPR, UK GDPR, or CCPA respectively. Contact us at
+      <a href="mailto:support@getbotpacks.com" style="color:#a78bfa;">support@getbotpacks.com</a>
+      to exercise these rights.
+    </p>
+  </section>
+
+  <!-- SECTION 8: CHROME EXTENSION -->
+  <div class="extension-section" id="extension">
+    <div class="ext-badge">
+      🧩 Chrome Extension
+    </div>
+    <h2>8. Chrome Extension — Specific Disclosures</h2>
+
+    <p>
+      The <strong>PAL Chrome Extension</strong> places a floating purple brain button on webpages you visit,
+      allowing you to save, summarize, query, or send page content directly to your PAL account.
+      This section provides specific disclosures required for Chrome Web Store compliance.
+    </p>
+
+    <h3>Permissions Used and Why</h3>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Permission</th>
+          <th>Why It's Needed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>&lt;all_urls&gt;</code> (host access)</td>
+          <td>
+            Required to display the floating PAL button on every webpage and to read page content
+            when <em>you</em> choose to save or process it. PAL does not continuously monitor or
+            record your browsing activity.
+          </td>
+        </tr>
+        <tr>
+          <td><code>storage</code> (chrome.storage.local)</td>
+          <td>
+            Stores your account slug and authentication token locally on your device,
+            so you stay logged in without re-entering credentials on every page.
+          </td>
+        </tr>
+        <tr>
+          <td>Service Worker (background)</td>
+          <td>
+            Handles communication between the extension's content script and PAL servers.
+            The service worker is not used for passive data collection.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>What the Extension Reads and When</h3>
+
+    <div class="highlight-box">
+      <p>
+        <strong>The extension only accesses webpage content when you take an action.</strong>
+        Clicking the brain button opens a panel. Pressing an action button (Save, Summarize,
+        Ask PAL, Create Asset) transmits the relevant content to PAL. Until you press an action
+        button, no content is read or transmitted.
+      </p>
+    </div>
+
+    <h3>Data Transmitted by the Extension</h3>
+    <p>When you trigger an action, the extension sends to PAL servers:</p>
+    <ul>
+      <li>Current page URL and title</li>
+      <li>Page text content OR your selected text (depending on your chosen capture mode)</li>
+      <li>Your account slug (to route data to your account)</li>
+      <li>Your auth token (to authenticate the request)</li>
+    </ul>
+
+    <h3>Data NOT Transmitted by the Extension</h3>
+    <ul>
+      <li>❌ Your browsing history or visited URLs (passively)</li>
+      <li>❌ Keystrokes, passwords, or form inputs</li>
+      <li>❌ Content from pages you did not explicitly choose to process</li>
+      <li>❌ Cookies or session data from third-party websites</li>
+    </ul>
+
+    <h3>Local Data Storage</h3>
+    <p>
+      The extension stores the following in <code>chrome.storage.local</code> on your device only:
+    </p>
+    <ul>
+      <li>Your PAL account slug</li>
+      <li>Your PAL authentication token</li>
+    </ul>
+    <p>
+      This data remains on your device and is never sent anywhere except to PAL's own servers
+      to authenticate your requests.
+    </p>
+
+    <h3>Incognito Mode</h3>
+    <p>
+      The PAL extension is <strong>not enabled in Incognito mode</strong> by default (v1).
+      To protect your privacy, the extension does not operate in Incognito windows unless
+      you explicitly enable it in Chrome's extension settings.
+    </p>
+
+    <h3>Uninstalling the Extension</h3>
+    <p>
+      Uninstalling the PAL extension removes all locally stored extension data (your slug and token)
+      from your device. Your PAL account and saved assets remain on PAL servers and can be accessed
+      via your browser at <code>[slug].getbotpacks.com</code>. To delete your account and all data,
+      contact <a href="mailto:support@getbotpacks.com" style="color:#a78bfa;">support@getbotpacks.com</a>.
+    </p>
+  </div>
+
+  <!-- SECTION 9: COOKIES -->
+  <section id="cookies">
+    <h2>9. Cookies &amp; Local Storage</h2>
+
+    <p>The PAL web application uses minimal local storage:</p>
+    <ul>
+      <li><strong>Authentication session:</strong> Keeps you logged in to your PAL board</li>
+      <li><strong>User preferences:</strong> Stores display settings (theme, view preferences)</li>
+    </ul>
+    <p>
+      PAL does not use third-party advertising cookies, tracking pixels, or analytics cookies.
+      We do not use Google Analytics or similar third-party tracking services.
+    </p>
+  </section>
+
+  <!-- SECTION 10: CHILDREN -->
+  <section id="children">
+    <h2>10. Children's Privacy</h2>
+
+    <p>
+      PAL is not directed at children under the age of 13. We do not knowingly collect personal
+      information from children under 13. If you believe we have inadvertently collected such
+      information, please contact us immediately at
+      <a href="mailto:support@getbotpacks.com" style="color:#a78bfa;">support@getbotpacks.com</a>
+      and we will delete it.
+    </p>
+  </section>
+
+  <!-- SECTION 11: CHANGES -->
+  <section id="changes">
+    <h2>11. Changes to This Policy</h2>
+
+    <p>
+      We may update this Privacy Policy from time to time. When we make material changes,
+      we will update the "Effective Date" at the top of this page and, where appropriate,
+      notify users via the PAL app or email (if you've provided one).
+    </p>
+    <p>
+      Continued use of PAL after changes take effect constitutes your acceptance of the
+      updated policy. We encourage you to review this page periodically.
+    </p>
+  </section>
+
+  <!-- SECTION 12: CONTACT -->
+  <section id="contact">
+    <h2>12. Contact Us</h2>
+
+    <p>
+      If you have questions, concerns, or requests regarding this Privacy Policy or your data,
+      please contact us:
+    </p>
+    <ul>
+      <li><strong>Email:</strong> <a href="mailto:support@getbotpacks.com" style="color:#a78bfa;">support@getbotpacks.com</a></li>
+      <li><strong>Website:</strong> <a href="https://getbotpacks.com" style="color:#a78bfa;">getbotpacks.com</a></li>
+    </ul>
+    <p>
+      We aim to respond to all privacy-related inquiries within 5 business days.
+    </p>
+  </section>
+
+  <div class="policy-footer">
+    <p>© 2026 GetBotPacks. All rights reserved.</p>
+    <p style="margin-top: 8px;">
+      <a href="https://getbotpacks.com">Home</a> ·
+      <a href="mailto:support@getbotpacks.com">Contact</a>
+    </p>
+    <p style="margin-top: 12px; font-size: 0.8rem; color: #475569;">
+      PAL — Persistent Asset Library | Privacy Policy effective July 15, 2026
+    </p>
+  </div>
+
+</div>
+</body>
+</html>
