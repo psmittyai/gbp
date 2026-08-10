@@ -98,6 +98,8 @@ app.all('/api/*', async (req, res) => {
     if (req.headers.cookie) headers.cookie = req.headers.cookie;
     // Forward Stripe signature header so webhook verification works
     if (req.headers['stripe-signature']) headers['stripe-signature'] = req.headers['stripe-signature'];
+    // Forward admin secret for Cave dashboard
+    if (req.headers['x-admin-secret']) headers['x-admin-secret'] = req.headers['x-admin-secret'];
 
     // For Stripe webhook: req.body is a raw Buffer (not parsed JSON) — pass it as-is
     // For all other routes: serialize the parsed JSON body
@@ -185,6 +187,7 @@ app.get('/sitemap.xml', (req, res) => res.sendFile(path.join(pub, 'sitemap.xml')
 app.get('/llms.txt',    (req, res) => { res.setHeader('Content-Type','text/plain'); res.sendFile(path.join(pub, 'llms.txt')); });
 app.get('/robots.txt',  (req, res) => { res.setHeader('Content-Type','text/plain'); res.sendFile(path.join(pub, 'robots.txt')); });
 app.get('/agents',      (req, res) => res.sendFile(path.join(pub, 'agents.html')));
+app.get('/cave',        (req, res) => { res.setHeader('Cache-Control','no-store,no-cache'); res.sendFile(path.join(pub, 'cave.html')); });
 
 // ── Fallback ───────────────────────────────────────────────────
 app.use((req, res) => res.redirect('/'));

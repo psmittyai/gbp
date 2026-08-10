@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Cave — GBP Command Center</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --card: #1a1f2e;
+      --card2: #1e2538;
+      --border: rgba(255,255,255,0.10);
+      --accent: #7c3aed;
+      --accent2: #6d28d9;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --green: #10b981;
+      --red: #ef4444;
+      --amber: #f59e0b;
+      --blue: #3b82f6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .cave-header {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .cave-header h1 { font-size: 1.1rem; font-weight: 900; letter-spacing: 0.02em; }
+    .cave-header .lock-btn {
+      margin-left: auto;
+      background: none; border: 1px solid var(--border);
+      color: var(--text-muted); cursor: pointer;
+      font-size: 0.75rem; padding: 5px 10px; border-radius: 6px;
+      font-family: inherit;
+    }
+
+    /* ── Auth gate ── */
+    #auth-gate {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; min-height: 80vh; gap: 16px;
+      padding: 24px;
+    }
+    #auth-gate h2 { font-size: 1.4rem; font-weight: 800; }
+    #auth-gate input {
+      width: 100%; max-width: 340px;
+      padding: 12px 16px;
+      background: var(--card); border: 1.5px solid var(--border);
+      border-radius: 10px; color: var(--text); font-size: 1rem;
+      font-family: inherit; outline: none;
+    }
+    #auth-gate input:focus { border-color: var(--accent); }
+    #auth-gate button {
+      width: 100%; max-width: 340px;
+      padding: 13px; background: var(--accent); color: #fff;
+      border: none; border-radius: 10px; font-size: 1rem;
+      font-weight: 800; cursor: pointer; font-family: inherit;
+    }
+
+    /* ── Main content ── */
+    #cave-main { display: none; }
+
+    /* ── Tabs ── */
+    .tab-bar {
+      display: flex; gap: 6px; padding: 16px 20px 0;
+      overflow-x: auto; scrollbar-width: none;
+      border-bottom: 1px solid var(--border);
+    }
+    .tab-bar::-webkit-scrollbar { display: none; }
+    .tab-pill {
+      flex-shrink: 0; padding: 8px 18px; border-radius: 20px 20px 0 0;
+      font-size: 0.85rem; font-weight: 700; cursor: pointer;
+      border: 1px solid var(--border); border-bottom: none;
+      background: transparent; color: var(--text-muted);
+      font-family: inherit; transition: all 0.15s;
+    }
+    .tab-pill.active {
+      background: var(--card); color: var(--text);
+      border-color: var(--border);
+    }
+    .tab-content { display: none; padding: 20px; }
+    .tab-content.active { display: block; }
+
+    /* ── Cards ── */
+    .data-card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 14px; padding: 16px;
+      margin-bottom: 12px;
+    }
+    .data-card .title { font-size: 0.95rem; font-weight: 800; color: var(--text); }
+    .data-card .meta  { font-size: 0.78rem; color: var(--text-muted); margin-top: 3px; }
+    .data-card .actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+
+    .btn { padding: 8px 16px; border-radius: 8px; font-size: 0.82rem; font-weight: 700; cursor: pointer; font-family: inherit; border: none; }
+    .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--text); }
+    .btn-approve { background: var(--green); color: #fff; }
+    .btn-reject  { background: transparent; border: 1.5px solid var(--red); color: var(--red); }
+    .btn-open    { background: var(--card2); border: 1.5px solid var(--border); color: var(--text); }
+
+    /* ── Status badges ── */
+    .badge {
+      display: inline-block; padding: 2px 10px; border-radius: 20px;
+      font-size: 0.72rem; font-weight: 700;
+    }
+    .badge-requested { background: #1e40af22; color: #60a5fa; border: 1px solid #3b82f640; }
+    .badge-building  { background: #78350f22; color: #fbbf24; border: 1px solid #f59e0b40; }
+    .badge-review    { background: #3730a322; color: #a78bfa; border: 1px solid #7c3aed40; }
+    .badge-live      { background: #065f4622; color: #34d399; border: 1px solid #10b98140; }
+    .badge-paused    { background: #27272a22; color: #94a3b8; border: 1px solid #64748b40; }
+    .badge-pending   { background: #78350f22; color: #fbbf24; border: 1px solid #f59e0b40; }
+    .badge-approved  { background: #065f4622; color: #34d399; border: 1px solid #10b98140; }
+    .badge-rejected  { background: #7f1d1d22; color: #f87171; border: 1px solid #ef444440; }
+
+    /* ── Section titles ── */
+    .section-title {
+      font-size: 0.72rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--text-muted); margin-bottom: 12px;
+      padding-bottom: 6px; border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Empty states ── */
+    .empty { text-align: center; padding: 40px 16px; color: var(--text-muted); font-size: 0.88rem; }
+
+    /* ── Reject modal ── */
+    #reject-modal {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7); z-index: 200;
+      align-items: center; justify-content: center;
+    }
+    #reject-modal .modal-box {
+      background: var(--card); border: 1.5px solid var(--border);
+      border-radius: 16px; padding: 24px; max-width: 400px; width: 90%;
+    }
+    #reject-modal h3 { font-size: 1rem; font-weight: 800; margin-bottom: 12px; }
+    #reject-modal textarea {
+      width: 100%; padding: 10px 14px;
+      background: var(--bg); border: 1.5px solid var(--border);
+      border-radius: 8px; color: var(--text); font-family: inherit;
+      font-size: 0.9rem; resize: none; outline: none; margin-bottom: 12px;
+    }
+    #reject-modal .modal-actions { display: flex; gap: 8px; }
+
+    /* ── Asset expand area ── */
+    .asset-expand {
+      display: none; background: var(--bg); border-radius: 8px;
+      padding: 12px; margin-top: 10px; border: 1px solid var(--border);
+      max-height: 300px; overflow-y: auto;
+    }
+    .asset-expand.open { display: block; }
+    .asset-item {
+      padding: 6px 0; border-bottom: 1px solid var(--border);
+      font-size: 0.82rem; color: var(--text);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .asset-item:last-child { border-bottom: none; }
+
+    /* ── Spinner ── */
+    .loading { text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="cave-header">
+  <span style="font-size:1.3rem;">🦇</span>
+  <h1>The Cave</h1>
+  <button class="lock-btn" onclick="lock()">🔒 Lock</button>
+</div>
+
+<!-- Auth gate -->
+<div id="auth-gate">
+  <div style="font-size:2rem;">🔐</div>
+  <h2>Cave Access</h2>
+  <input type="password" id="admin-secret-input" placeholder="Admin secret"
+    onkeydown="if(event.key==='Enter') tryUnlock()">
+  <button onclick="tryUnlock()">Unlock →</button>
+  <div id="auth-error" style="color:var(--red);font-size:0.85rem;display:none;">Wrong secret</div>
+</div>
+
+<!-- Main content (hidden until auth) -->
+<div id="cave-main">
+
+  <!-- Tab bar -->
+  <div class="tab-bar">
+    <button class="tab-pill active" onclick="switchCaveTab('sites')">🏗️ Sites</button>
+    <button class="tab-pill" onclick="switchCaveTab('boards')">🤖 Boards</button>
+    <button class="tab-pill" onclick="switchCaveTab('queue')">📋 Queue</button>
+  </div>
+
+  <!-- SITES TAB -->
+  <div class="tab-content active" id="cave-tab-sites">
+    <div id="sites-loading" class="loading">Loading sites data…</div>
+    <div id="sites-content" style="display:none;">
+
+      <!-- NEW BUILDS -->
+      <div class="section-title">🚀 New Builds (Pending)</div>
+      <div id="sites-new-builds"></div>
+
+      <!-- LIVE SITES -->
+      <div class="section-title" style="margin-top:24px;">✅ Live Sites</div>
+      <div id="sites-live"></div>
+
+      <!-- ATTENTION -->
+      <div class="section-title" style="margin-top:24px;">⚠️ Attention</div>
+      <div id="sites-attention"></div>
+
+    </div>
+  </div>
+
+  <!-- BOARDS TAB -->
+  <div class="tab-content" id="cave-tab-boards">
+    <div id="boards-loading" class="loading">Loading boards…</div>
+    <div id="boards-content" style="display:none;"></div>
+  </div>
+
+  <!-- QUEUE TAB -->
+  <div class="tab-content" id="cave-tab-queue">
+    <div id="queue-loading" class="loading">Loading queue…</div>
+    <div id="queue-content" style="display:none;"></div>
+  </div>
+
+</div><!-- /cave-main -->
+
+<!-- Reject modal -->
+<div id="reject-modal">
+  <div class="modal-box">
+    <h3>Reject this request?</h3>
+    <textarea id="reject-note" rows="3" placeholder="Optional note for Patrick's records…"></textarea>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeRejectModal()" style="flex:1;">Cancel</button>
+      <button class="btn btn-reject" onclick="confirmReject()" style="flex:1;">Reject</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Config ────────────────────────────────────────────────────────────────────
+const CAVE_SECRET_KEY = 'cave_admin_secret';
+let ADMIN_SECRET = '';
+let _pendingRejectId = null;
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+function tryUnlock() {
+  const secret = document.getElementById('admin-secret-input').value.trim();
+  if (!secret) return;
+  ADMIN_SECRET = secret;
+  localStorage.setItem(CAVE_SECRET_KEY, secret);
+  document.getElementById('auth-error').style.display = 'none';
+  showCave();
+}
+
+function lock() {
+  localStorage.removeItem(CAVE_SECRET_KEY);
+  ADMIN_SECRET = '';
+  document.getElementById('cave-main').style.display = 'none';
+  document.getElementById('auth-gate').style.display = 'flex';
+  document.getElementById('admin-secret-input').value = '';
+}
+
+function showCave() {
+  document.getElementById('auth-gate').style.display = 'none';
+  document.getElementById('cave-main').style.display = 'block';
+  loadSites();
+}
+
+// ── Tabs ──────────────────────────────────────────────────────────────────────
+function switchCaveTab(tab) {
+  document.querySelectorAll('.tab-pill').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById(`cave-tab-${tab}`).classList.add('active');
+  if (tab === 'sites') loadSites();
+  else if (tab === 'boards') loadBoards();
+  else if (tab === 'queue') loadQueue();
+}
+
+// ── API helper ────────────────────────────────────────────────────────────────
+async function caveGet(path) {
+  const r = await fetch(path, {
+    headers: { 'x-admin-secret': ADMIN_SECRET },
+    credentials: 'include',
+  });
+  if (r.status === 401) { lock(); throw new Error('Auth failed'); }
+  return r.json();
+}
+
+async function cavePatch(path, body) {
+  const r = await fetch(path, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', 'x-admin-secret': ADMIN_SECRET },
+    credentials: 'include',
+    body: JSON.stringify(body),
+  });
+  if (r.status === 401) { lock(); throw new Error('Auth failed'); }
+  return r.json();
+}
+
+// ── Sites tab ─────────────────────────────────────────────────────────────────
+async function loadSites() {
+  document.getElementById('sites-loading').style.display = 'block';
+  document.getElementById('sites-content').style.display = 'none';
+  try {
+    const data = await caveGet('/api/smart-sites/queue');
+    renderSites(data);
+  } catch(e) {
+    document.getElementById('sites-loading').textContent = 'Error loading: ' + e.message;
+  }
+}
+
+function renderSites(data) {
+  document.getElementById('sites-loading').style.display = 'none';
+  document.getElementById('sites-content').style.display = 'block';
+
+  const queue = data.queue || [];
+  const liveSites = data.live_sites || [];
+
+  // NEW BUILDS: queue items with action='new_site' and status='pending'
+  const newBuilds = queue.filter(q => q.action === 'new_site' && q.status === 'pending');
+  const newBuildsEl = document.getElementById('sites-new-builds');
+  if (!newBuilds.length) {
+    newBuildsEl.innerHTML = '<div class="empty">No pending site builds 🎉</div>';
+  } else {
+    newBuildsEl.innerHTML = newBuilds.map(q => {
+      const payload = q.payload || {};
+      const requestedDate = q.requested_at ? new Date(q.requested_at).toLocaleDateString([], {month:'short',day:'numeric'}) : '—';
+      const assetCount = payload.asset_count || 0;
+      const domain = q.domain || payload.domain || 'TBD';
+      const assetHtml = (payload.assets || []).length
+        ? (payload.assets || []).map(a => `<div class="asset-item">📄 ${esc(a.title)}</div>`).join('')
+        : '<div class="asset-item" style="color:var(--text-muted);">No assets selected</div>';
+      return `
+        <div class="data-card" style="border-color: #f59e0b40;">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px;">
+            <div>
+              <div class="title">${esc(q.client_name || q.board_slug)} — ${esc(q.site_name || payload.site_name || 'Unnamed Site')}</div>
+              <div class="meta">Requested: ${requestedDate} · Assets: ${assetCount} · Domain: ${esc(domain)}</div>
+              ${payload.primary_cta ? `<div class="meta" style="margin-top:2px;">CTA: ${esc(payload.primary_cta)}</div>` : ''}
+            </div>
+            <span class="badge badge-pending">Pending</span>
+          </div>
+          <div class="asset-expand" id="expand-${q.id}">
+            <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);margin-bottom:6px;">SELECTED ASSETS</div>
+            ${assetHtml}
+          </div>
+          <div class="actions">
+            <button class="btn btn-open" onclick="toggleExpand(${q.id})">Open</button>
+            <button class="btn btn-approve" onclick="approveQueue(${q.id})">✅ Approve Launch</button>
+            <button class="btn btn-reject" onclick="openRejectModal(${q.id})">Reject</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // LIVE SITES
+  const liveEl = document.getElementById('sites-live');
+  if (!liveSites.length) {
+    liveEl.innerHTML = '<div class="empty">No live sites yet</div>';
+  } else {
+    liveEl.innerHTML = liveSites.map(sp => {
+      const lastPub = sp.last_published_at
+        ? new Date(sp.last_published_at).toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})
+        : 'Never';
+      const launched = sp.launched_at ? new Date(sp.launched_at).toLocaleDateString([],{month:'short',day:'numeric'}) : '—';
+      return `
+        <div class="data-card" style="border-color: #10b98140;">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;">
+            <div>
+              <div class="title">${esc(sp.board_name || sp.board_slug)} — ${esc(sp.site_name)}</div>
+              <div class="meta">
+                Pages: — · KB chunks: — · Domain: ${sp.domain ? esc(sp.domain) : 'TBD'} ·
+                Schedule: ${sp.publish_mode || 'daily'} · Assets: ${sp.published_asset_count || 0}
+              </div>
+              <div class="meta" style="margin-top:2px;">Last publish: ${lastPub} · Launched: ${launched}</div>
+            </div>
+            <span class="badge badge-${sp.status}">${capitalize(sp.status)}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // ATTENTION: rejected or failed items
+  const attention = queue.filter(q => q.status === 'rejected');
+  const attentionEl = document.getElementById('sites-attention');
+  if (!attention.length) {
+    attentionEl.innerHTML = '<div class="empty">All clear ✓</div>';
+  } else {
+    attentionEl.innerHTML = attention.map(q => `
+      <div class="data-card" style="border-color: #ef444440;">
+        <div class="title">${esc(q.client_name || q.board_slug)} — ${esc(q.site_name || 'Site')}</div>
+        <div class="meta">Rejected${q.patrick_notes ? ': ' + esc(q.patrick_notes) : ''}</div>
+        <div class="actions">
+          <button class="btn btn-outline" onclick="approveQueue(${q.id})">Re-approve</button>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+// ── Queue approve/reject ──────────────────────────────────────────────────────
+async function approveQueue(id) {
+  try {
+    await cavePatch(`/api/smart-sites/queue/${id}/approve`, {});
+    loadSites();
+  } catch(e) { alert('Error: ' + e.message); }
+}
+
+function openRejectModal(id) {
+  _pendingRejectId = id;
+  document.getElementById('reject-note').value = '';
+  document.getElementById('reject-modal').style.display = 'flex';
+}
+
+function closeRejectModal() {
+  _pendingRejectId = null;
+  document.getElementById('reject-modal').style.display = 'none';
+}
+
+async function confirmReject() {
+  if (!_pendingRejectId) return;
+  const note = document.getElementById('reject-note').value.trim();
+  try {
+    await cavePatch(`/api/smart-sites/queue/${_pendingRejectId}/reject`, { note });
+    closeRejectModal();
+    loadSites();
+  } catch(e) { alert('Error: ' + e.message); }
+}
+
+function toggleExpand(id) {
+  const el = document.getElementById(`expand-${id}`);
+  if (el) el.classList.toggle('open');
+}
+
+// ── Boards tab ────────────────────────────────────────────────────────────────
+async function loadBoards() {
+  document.getElementById('boards-loading').style.display = 'block';
+  document.getElementById('boards-content').style.display = 'none';
+  try {
+    const data = await caveGet('/api/admin/boards');
+    renderBoards(data.boards || []);
+  } catch(e) {
+    document.getElementById('boards-loading').textContent = 'Error: ' + e.message;
+  }
+}
+
+function renderBoards(boards) {
+  document.getElementById('boards-loading').style.display = 'none';
+  const el = document.getElementById('boards-content');
+  el.style.display = 'block';
+  if (!boards.length) { el.innerHTML = '<div class="empty">No boards yet</div>'; return; }
+  el.innerHTML = `
+    <div class="section-title">${boards.length} Boards</div>
+    ${boards.map(b => `
+      <div class="data-card">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;">
+          <div>
+            <div class="title">${esc(b.name)} <span style="color:var(--text-muted);font-weight:400;">@${esc(b.slug)}</span></div>
+            <div class="meta">Tier: ${b.tier} · Credits: ${b.credits_remaining} · Sessions: ${b.active_sessions || 0}</div>
+            <div class="meta" style="margin-top:2px;">Total credits used: ${b.total_credits_used || 0} · Last active: ${b.last_active ? new Date(b.last_active).toLocaleDateString() : 'Never'}</div>
+          </div>
+          <span class="badge ${b.suspended ? 'badge-rejected' : 'badge-live'}">${b.suspended ? 'Suspended' : 'Active'}</span>
+        </div>
+      </div>
+    `).join('')}
+  `;
+}
+
+// ── Queue tab ─────────────────────────────────────────────────────────────────
+async function loadQueue() {
+  document.getElementById('queue-loading').style.display = 'block';
+  document.getElementById('queue-content').style.display = 'none';
+  try {
+    const data = await caveGet('/api/smart-sites/queue');
+    renderQueue(data.queue || []);
+  } catch(e) {
+    document.getElementById('queue-loading').textContent = 'Error: ' + e.message;
+  }
+}
+
+function renderQueue(queue) {
+  document.getElementById('queue-loading').style.display = 'none';
+  const el = document.getElementById('queue-content');
+  el.style.display = 'block';
+  if (!queue.length) {
+    el.innerHTML = '<div class="empty">Queue is empty</div>';
+    return;
+  }
+  el.innerHTML = `
+    <div class="section-title">${queue.length} items</div>
+    ${queue.map(q => {
+      const payload = q.payload || {};
+      const dt = q.requested_at ? new Date(q.requested_at).toLocaleString([],{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
+      return `
+        <div class="data-card">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px;">
+            <div>
+              <div class="title">${esc(q.client_name || q.board_slug)} — ${esc(q.site_name || payload.site_name || q.action)}</div>
+              <div class="meta">Action: ${q.action} · Requested: ${dt}</div>
+              ${q.patrick_notes ? `<div class="meta" style="margin-top:2px;">Note: ${esc(q.patrick_notes)}</div>` : ''}
+            </div>
+            <span class="badge badge-${q.status}">${capitalize(q.status)}</span>
+          </div>
+          ${q.status === 'pending' ? `
+          <div class="actions">
+            <button class="btn btn-approve" onclick="approveQueue(${q.id})">✅ Approve</button>
+            <button class="btn btn-reject" onclick="openRejectModal(${q.id})">Reject</button>
+          </div>` : ''}
+        </div>
+      `;
+    }).join('')}
+  `;
+}
+
+// ── Utilities ─────────────────────────────────────────────────────────────────
+function esc(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
+}
+
+function capitalize(s) {
+  if (!s) return '';
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+(function init() {
+  const saved = localStorage.getItem(CAVE_SECRET_KEY);
+  if (saved) {
+    ADMIN_SECRET = saved;
+    showCave();
+  }
+})();
+</script>
+</body>
+</html>
