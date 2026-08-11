@@ -379,34 +379,106 @@ function renderSites(data) {
             <div>
               <div class="title">${esc(sp.board_name || sp.board_slug)} — ${esc(sp.site_name)}</div>
               <div class="meta">
-                Pages: — · KB chunks: — · Domain: ${sp.domain ? esc(sp.domain) : 'TBD'} ·
+                Domain: ${sp.domain ? esc(sp.domain) : 'TBD'} ·
                 Schedule: ${sp.publish_mode || 'daily'} · Assets: ${sp.published_asset_count || 0}
               </div>
               <div class="meta" style="margin-top:2px;">Last publish: ${lastPub} · Launched: ${launched}</div>
             </div>
             <span class="badge badge-${sp.status}">${capitalize(sp.status)}</span>
           </div>
+          <div class="actions" style="margin-top:10px;">
+            <button class="btn btn-outline" onclick="loadDeployments(${sp.id}, this)">📋 Deployments</button>
+          </div>
+          <div id="deployments-${sp.id}" style="display:none;margin-top:10px;"></div>
         </div>
       `;
     }).join('');
   }
 
-  // ATTENTION: rejected or failed items
-  const attention = queue.filter(q => q.status === 'rejected');
+  // ATTENTION: rejected build requests + failed publish jobs
+  const rejected = queue.filter(q => q.status === 'rejected');
+  const failedJobs = data.failed_jobs || [];
   const attentionEl = document.getElementById('sites-attention');
-  if (!attention.length) {
+  if (!rejected.length && !failedJobs.length) {
     attentionEl.innerHTML = '<div class="empty">All clear ✓</div>';
   } else {
-    attentionEl.innerHTML = attention.map(q => `
+    const rejectedHtml = rejected.map(q => `
       <div class="data-card" style="border-color: #ef444440;">
         <div class="title">${esc(q.client_name || q.board_slug)} — ${esc(q.site_name || 'Site')}</div>
-        <div class="meta">Rejected${q.patrick_notes ? ': ' + esc(q.patrick_notes) : ''}</div>
+        <div class="meta">Build rejected${q.patrick_notes ? ': ' + esc(q.patrick_notes) : ''}</div>
         <div class="actions">
           <button class="btn btn-outline" onclick="approveQueue(${q.id})">Re-approve</button>
         </div>
       </div>
     `).join('');
+
+    const failedHtml = failedJobs.map(j => `
+      <div class="data-card" style="border-color: #ef444440;">
+        <div class="title">⚠️ ${esc(j.board_name || j.board_slug)} — ${esc(j.site_name)}</div>
+        <div class="meta">Publish job failed · Action: ${esc(j.action)} · Retries: ${j.retry_count || 0}</div>
+        ${j.error_message ? `<div class="meta" style="color:#ef4444;margin-top:2px;">${esc(j.error_message.substring(0,120))}</div>` : ''}
+        <div class="actions">
+          <button class="btn btn-approve" onclick="retryJob(${j.id})">🔄 Retry</button>
+        </div>
+      </div>
+    `).join('');
+
+    attentionEl.innerHTML = rejectedHtml + failedHtml;
   }
+}
+
+// ── Deployment rollback ──────────────────────────────────────────────────────
+async function loadDeployments(siteId, btn) {
+  const container = document.getElementById(`deployments-${siteId}`);
+  if (container.style.display !== 'none') {
+    container.style.display = 'none';
+    btn.textContent = '📋 Deployments';
+    return;
+  }
+  btn.textContent = 'Loading…';
+  try {
+    const data = await caveGet(`/api/smart-sites/deployments/${siteId}`);
+    const deps = data.deployments || [];
+    if (!deps.length) {
+      container.innerHTML = '<div class="meta" style="padding:8px 0;">No deployments yet</div>';
+    } else {
+      container.innerHTML = deps.map(d => {
+        const ts = new Date(d.deployed_at).toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+        const isRolledBack = d.status === 'rolled_back';
+        return `
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.08);gap:8px;">
+            <div>
+              <div style="font-size:0.8rem;font-weight:600;">${ts} · ${d.job_action || 'update'}</div>
+              <div style="font-size:0.72rem;color:var(--text-muted);">Actions: ${d.action_count || '—'} · Pages: ${d.page_count || '—'} · ${isRolledBack ? '⏪ Rolled back' : '✅ Active'}</div>
+            </div>
+            ${!isRolledBack ? `<button class="btn btn-reject" style="font-size:0.72rem;padding:4px 10px;" onclick="rollbackDeployment(${d.id}, ${siteId})">⏪ Rollback</button>` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+    container.style.display = 'block';
+    btn.textContent = '📋 Hide';
+  } catch(e) {
+    container.innerHTML = `<div class="meta" style="color:#ef4444;">Error: ${esc(e.message)}</div>`;
+    container.style.display = 'block';
+    btn.textContent = '📋 Deployments';
+  }
+}
+
+async function rollbackDeployment(depId, siteId) {
+  if (!confirm('Roll back this deployment? Current site content will be restored to this snapshot.')) return;
+  try {
+    await cavePatch(`/api/smart-sites/deployments/${depId}/rollback`, {});
+    alert('✅ Rollback complete');
+    loadSites();
+  } catch(e) { alert('Rollback failed: ' + e.message); }
+}
+
+async function retryJob(jobId) {
+  try {
+    await cavePatch(`/api/smart-sites/jobs/${jobId}/retry`, {});
+    loadSites();
+  } catch(e) { alert('Retry failed: ' + e.message); }
 }
 
 // ── Queue approve/reject ──────────────────────────────────────────────────────
