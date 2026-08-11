@@ -348,6 +348,7 @@ function renderSites(data) {
               ${payload.primary_cta ? `<div class="meta" style="margin-top:2px;">CTA: ${esc(payload.primary_cta)}</div>` : ''}
             </div>
             <span class="badge badge-pending">Pending</span>
+            ${payload.self_serve ? '<span class="badge" style="background:#7c3aed22;color:#a78bfa;border:1px solid #7c3aed40;margin-left:4px">Self-Serve</span>' : '<span class="badge" style="background:#06b6d422;color:#22d3ee;border:1px solid #06b6d440;margin-left:4px">Manual</span>'}
           </div>
           <div class="asset-expand" id="expand-${q.id}">
             <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);margin-bottom:6px;">SELECTED ASSETS</div>
@@ -380,6 +381,7 @@ function renderSites(data) {
               <div class="title">${esc(sp.board_name || sp.board_slug)} — ${esc(sp.site_name)}</div>
               <div class="meta">
                 Domain: ${sp.domain ? esc(sp.domain) : 'TBD'} ·
+                DNS: <span style="color:${sp.domain_status === 'active' ? '#34d399' : sp.domain_status === 'dns_pending' ? '#fbbf24' : '#94a3b8'}">${sp.domain_status || 'N/A'}</span> ·
                 Schedule: ${sp.publish_mode || 'daily'} · Assets: ${sp.published_asset_count || 0}
               </div>
               <div class="meta" style="margin-top:2px;">Last publish: ${lastPub} · Launched: ${launched}</div>
